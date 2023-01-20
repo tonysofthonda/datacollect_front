@@ -1,0 +1,104 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="text-center p-2">
+      <h2>CONFIDENCIAL</h2>
+      <h2>ESTADO FINANCIERO CONCECIONARIO</h2>
+    </div>
+  </ng-template>
+
+  <h3 class="text-center">BALANCE GENERAL</h3>
+  <div class="grid">
+    <div class="col-6">
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-id-card mr-1"></i>No. de Distribuidor</span>
+        <input pInputText  readonly [value]="financialState.dealer.dealerNumber">
+      </div>
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-user mr-1"></i>Distribuidor</span>
+        <input pInputText  readonly [value]="financialState.dealer.name">
+      </div>
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-home mr-1"></i>Codigo Postal</span>
+        <input pInputText  readonly [value]="financialState.dealer.postcode || ''">
+      </div>
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-calendar mr-1"></i>Mes/Año</span>
+        <input pInputText  readonly [value]="financialStateDate | titlecase">
+      </div>
+    </div>
+
+    <div class="col-6">
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-globe mr-1"></i>Estado</span>
+        <input pInputText  readonly [value]="financialState.dealer.city.state.name">
+      </div>
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-building mr-1"></i>Ciudad</span>
+        <input pInputText  readonly [value]="financialState.dealer.city.name">
+      </div>
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-info mr-1"></i>Estatus</span>
+        <input pInputText  readonly [value]="lastStatus?.status?.name">
+      </div>
+
+      <div class="p-inputgroup mb-1">
+        <span class="p-inputgroup-addon"><i class="pi pi-calendar-times mr-1"></i>Fecha limite de envio</span>
+        <input pInputText  readonly [value]="limitDate">
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-column align-items-end">
+    <div class="flex" *ngIf="!financialStateFormService.lockFinancialState">
+      <div pTooltip="Guarda los avances de tu estado financiero" tooltipPosition="top">
+        <button
+          pButton type="button"
+          label="Guardar" class="p-button-warning mr-2"
+          icon="pi pi-save" (click)="handleSave($event)"
+          [disabled]="financialStateFormService.loadingSave">
+        </button>
+      </div>
+
+      <div [pTooltip]="sendTooltip" tooltipPosition="top">
+        <button
+          pButton type="button"
+          label="Enviar" class="p-button-info mr-2"
+          icon="pi pi-send" (click)="handleSend($event)"
+          [disabled]="invalidFinancialState">
+        </button>
+      </div>
+    </div>
+    <div class="flex" *ngIf="financialStateFormService.lockFinancialState">
+      <div [pTooltip]="approveTooltip" tooltipPosition="top">
+        <button
+          pButton type="button"
+          label="Aprobar" class="p-button-success mr-2"
+          icon="pi pi-check" (click)="handleApprove($event)"
+          [disabled]="!financialStateFormService.enableApprove">
+        </button>
+      </div>
+
+      <div>
+        <button
+          pButton type="button"
+          label="Rechazar" class="p-button-danger mr-2"
+          icon="pi pi-times" (click)="handleReject($event)">
+        </button>
+      </div>
+
+      <div>
+        <button
+          pButton type="button"
+          label="Observaciones" class="p-button-info mr-2"
+          icon="pi pi-pencil" (click)="handleObservations($event)">
+        </button>
+      </div>
+    </div>
+  </div>
+</p-card>

@@ -1,0 +1,33 @@
+<ng-container *ngIf="inputGroup; else defaultInput">
+  <div class="p-inputgroup" [ngClass]="{'formula': accountValue.formula}">
+    <span class="p-inputgroup-addon" [ngClass]="{'p-disabled':accountValue.readOnly}">{{accountValue.typeValue.name}}<i class="pi pi-lock" *ngIf="accountValue.formula"></i></span>
+    <input
+      [id]="'account-' + accountValue.id" [account]="account"
+      type="text" pInputText [readonly]="readonly || accountValue.formula"
+      [tabindex]="accountValue.formula ? -1 : 0"
+      [pTooltip]="formulaDesc(accountValue)" tooltipPosition="top"
+      accountInput [formControlName]="accountValue.id!"
+      [control]="control" [accountValue]="accountValue"
+      >
+      <span *ngIf="false" class="p-inputgroup-addon"><span class="mr-2">Error</span><p-checkbox name="account-error" [pTooltip]="tooltipText" [formControl]="errorControl" [binary]="true"></p-checkbox></span>
+  </div>
+  <small class="p-error" *ngIf="showError">
+    {{ errorMessage }}</small>
+</ng-container>
+
+<ng-template #defaultInput>
+  <div class="p-inputgroup" [ngClass]="{'formula': accountValue.formula}">
+    <input
+      [id]="'account-' + accountValue.id" [account]="account"
+      type="text" pInputText [readonly]="readonly || accountValue.formula"
+      [tabindex]="accountValue.formula ? -2 : 0"
+      [pTooltip]="formulaDesc(accountValue)" tooltipPosition="top"
+      accountInput [formControlName]="accountValue.id!"
+      [control]="control" [accountValue]="accountValue"/>
+  </div>
+  <div class="mt-2 flex flex-row-reverse" *ngIf="false">
+    <span class="mr-2">Error</span><p-checkbox name="account-error" [pTooltip]="tooltipText" [formControl]="errorControl" [binary]="true"></p-checkbox>
+  </div>
+  <small class="p-error" *ngIf="showError">
+  {{ errorMessage }}</small>
+</ng-template>

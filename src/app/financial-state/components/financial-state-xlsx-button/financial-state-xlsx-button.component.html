@@ -1,0 +1,15 @@
+<button
+  pButton type="button"
+  label="Descargar Layout" class="p-button-success h-2rem"
+  icon="pi pi-download" (click)="generateXlsx()"
+  [disabled]="loadingXlsx">
+</button>
+
+<p-toast key="load-xlsx" position="bottom-right" [baseZIndex]="9999999999999999">
+  <ng-template pTemplate="message">
+    <div class="flex align-items-center w-full">
+      <p-progressSpinner styleClass="custom-spinner" class="mr-2" [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+      <h4>Generando Layout</h4>
+    </div>
+</ng-template>
+</p-toast>

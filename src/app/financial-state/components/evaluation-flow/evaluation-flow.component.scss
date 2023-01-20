@@ -1,0 +1,102 @@
+.status-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .main{
+    align-items: stretch;
+    display: flex;
+    align-items: center;
+
+    .info{
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5px;
+
+      .date{
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        i{
+          margin-right: 5px;
+        }
+        h5{
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .extra-info{
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .area-type{
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .area{
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.prefix{
+  font-style: italic;
+  color: #A6A6A6;
+}
+
+:host ::ng-deep p-card{
+  text-align: center;
+  cursor: default;
+  margin-right: 5px;
+}
+
+:host ::ng-deep p-card.p-element.stateless .p-component{
+  background-color: #CCCCCC;
+}
+
+:host ::ng-deep p-card.p-element.progress .p-component{
+  background-color: #00739D;
+  color: #fff;
+}
+
+:host ::ng-deep p-card.p-element.locked .p-component{
+  background-color: #FF3E3D;
+  color: #fff;
+}
+
+:host ::ng-deep p-card.p-element.sent .p-component{
+  background-color: #FFBC44;
+}
+
+:host ::ng-deep p-card.p-element.approved .p-component{
+  background-color: #1F8C60;
+  color: #fff;
+}
+
+:host ::ng-deep p-card.p-element.rejected .p-component{
+  background-color: #C41520;
+  color: #fff;
+}
+
+:host ::ng-deep p-card.p-element.commented .p-component{
+  background-color: #2DCCFF;
+}
+
+:host ::ng-deep .p-overlay-badge .p-badge{
+  min-width: 6rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+}
+
+:host ::ng-deep .p-divider-solid.p-divider-horizontal:before{
+  border-color: #495057;
+  border-width: 2px;
+  margin-top: 5px;
+}

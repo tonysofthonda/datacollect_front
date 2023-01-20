@@ -1,0 +1,47 @@
+<div class="flex w-full justify-content-between mb-5">
+  <app-title catalog="Orders Types" [titlePage]="id ? 'Edit' : 'Add'"></app-title>
+</div>
+
+<p-card class="w-min">
+  <form [formGroup]="orderTypeForm" (ngSubmit)="submit()" class="grid">
+    <div class="col-12 lg:col-6 p-field">
+      <label for="code">Code</label>
+      <input
+        id="code" type="text" pInputText
+        formControlName="code"class="w-full"
+        maxlength="5"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('code')">
+        {{ validationService.invalidMessage("code") }}</small
+      >
+    </div>
+    <div class="col-12 lg:col-6 p-field"></div>
+    <div class="col-12 lg:col-6 p-field">
+      <label for="description">Description</label>
+      <textarea
+        id="description" pInputTextarea
+        formControlName="description" class="w-full"
+        rows="3" [autoResize]="true"
+      ></textarea>
+    </div>
+
+    <div class="col-12 p-field">
+      <app-service-type-input [formInputControl]="orderTypeForm.get('servicesTypes')" [serviceTypes]="route.snapshot.data['data']['serviceTypes']"></app-service-type-input>
+    </div>
+
+    <div class="flex justify-content-between col-12 lg:col-6">
+      <button
+        pButton type="button"
+        label="Cancel" icon="pi pi-times"
+        class="p-button-danger" routerLink="/orderstype/list"
+      ></button>
+
+      <button
+        pButton type="submit"
+        label="Save" icon="pi pi-check"
+        class="p-button-success" [disabled]="orderTypeForm.invalid  || orderTypeForm.pending"
+        [loading]="submited"
+      ></button>
+    </div>
+  </form>
+</p-card>

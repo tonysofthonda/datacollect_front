@@ -1,0 +1,68 @@
+<p-card class="header-card">
+  <div class="flex w-full justify-content-between mb-5">
+    <app-title catalog="Dealers" titlePage="List"></app-title>
+
+    <div class="flex flex-column align-items-end">
+      <button
+        pButton label="New"
+        class="p-button-info mb-3" routerLink="/dealer/add"
+      ></button>
+
+      <app-search (termEvent)="setTerm($event)"></app-search>
+    </div>
+  </div>
+</p-card>
+
+<p-card>
+  <p-table
+    [value]="paginatedDealers.result" responsiveLayout="scroll"
+    [paginator]="true" [rows]="paginatedDealers.elementsByPage"
+    [totalRecords]="paginatedDealers.totalElements" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50, 100]" [loading]="loading" [loading]="loading" [lazy]="true"
+    (onLazyLoad)="loadDealers($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="dealerNumber">
+          Dealer Number <p-sortIcon field="dealerNumber"></p-sortIcon>
+        </th>
+        <th pSortableColumn="dealerGroup">
+          Dealer Group <p-sortIcon field="dealerGroup"></p-sortIcon>
+        </th>
+        <th pSortableColumn="terchief">
+          Head Of Territory <p-sortIcon field="terchief.firstName"></p-sortIcon>
+        </th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-dealer>
+      <tr>
+        <td>{{ dealer.dealerNumber }}</td>
+        <td>{{ dealer.dealerGroup }}</td>
+        <td>{{ dealer.terchief }} </td>
+        <td>
+          <p-inputSwitch
+            #switchRef [ngModel]="dealer.status === 'ENABLED'"
+            (onChange)="showChangeStatusDialog(switchRef, $event, dealer.id)"
+          ></p-inputSwitch>
+        </td>
+        <td>
+          <button
+            pButton icon="pi pi-user-edit"
+            class="p-button-warning p-button-rounded"
+            [routerLink]="['/dealer/edit/', dealer.id]"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8"><h2>No records found</h2></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-confirmDialog rejectButtonStyleClass="p-button-text"></p-confirmDialog>

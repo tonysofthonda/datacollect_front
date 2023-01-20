@@ -1,0 +1,43 @@
+<form #viewForm="ngForm" [formGroup]="positionForm" class="grid" (ngSubmit)="submit()" >
+  <div class="col-12 lg:col-6 p-field">
+    <div>
+      <label for="jobId">Dealer Role</label>
+    </div>
+    <p-autoComplete formControlName="jobId" [suggestions]="filterPositions"
+      emptyMessage="Without results. this position group will be added as new" (completeMethod)="filterItems($event)"
+      (onSelect)="selectItem($event)"
+    >
+    </p-autoComplete>
+    <div>
+      <small class="p-error" *ngIf="validationService.fieldInvalid('jobId')">
+        {{ validationService.invalidMessage("jobId") }}</small>
+    </div>
+  </div>
+  <div class="col-12 lg:col-6 p-field"></div>
+  <div class="col-12 lg:col-6 p-field">
+      <label for="name">Name</label>
+      <textarea
+        id="name" pInputTextarea
+        formControlName="name" class="w-full"
+        rows="3" [autoResize]="true"
+      ></textarea>
+      <small class="p-error" *ngIf="validationService.fieldInvalid('name')">
+        {{ validationService.invalidMessage("name") }}</small>
+    </div>
+    <div class="col-12 lg:col-6 p-field"></div>
+
+    <div class="col-12">
+      <button
+        pButton type="button"
+        label="Cancel Edit" icon="pi pi-times"
+        class="p-button-danger mr-2" *ngIf="positionEdit"
+        (click)="cancelEdit()"
+      ></button>
+
+      <button
+        pButton type="submit"
+        [ngClass]="{ 'p-button-success': !positionEdit, 'p-button-warning': positionEdit }"
+        [disabled]="positionForm.invalid"
+      >{{positionEdit ? 'Edit & Save Position' : 'Save Position'}}</button>
+    </div>
+</form>

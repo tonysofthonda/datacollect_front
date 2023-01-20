@@ -1,0 +1,55 @@
+<form [formGroup]="formGroup" class="mt-4">
+  <p-table [columns]="headerTypeValues" [value]="accounts" responsiveLayout="scroll" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header" let-typeValues>
+        <tr>
+          <th [attr.rowspan]="totalHeaderRows">Mes</th>
+          <th [attr.rowspan]="totalHeaderRows">Numero de cuenta</th>
+          <th  *ngFor="let typeValue of typeValues" [attr.rowspan]="rowSpan(typeValue)" [attr.colspan]="typeValue.children?.length || 1">
+            {{typeValue.name}}
+          </th>
+        </tr>
+
+        <ng-container *ngFor="let typeValue of typeValues">
+          <ng-container *ngIf="typeValue.children">
+
+            <ng-container
+              *ngTemplateOutlet="recursiveTypeValueChildren; context:{ rels: typeValue.children }"
+            ></ng-container>
+
+          </ng-container>
+        </ng-container>
+
+        <ng-template #recursiveTypeValueChildren let-rels="rels">
+          <tr>
+            <th  *ngFor="let rel of rels" [attr.rowspan]="rowSpan(rel.child)" [attr.colspan]="rel.child.children?.length || 1">
+              {{rel.child.name}}
+            </th>
+          </tr>
+
+          <ng-container *ngFor="let rel of rels">
+            <ng-container *ngIf="rel.child.children">
+              <ng-container
+                *ngTemplateOutlet="recursiveTypeValueChildren; context:{ rels: rel.child.children }"
+              ></ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-account>
+      <tr>
+        <td>{{account.name || ''}}</td>
+        <td><ng-container *ngIf="!account.accountNumber.startsWith('M')">{{account.accountNumber || ''}}</ng-container></td>
+        <ng-container *ngFor="let typeValue of typeValues">
+          <td>
+            <ng-container *ngIf="getAccountValue(account,typeValue) as accountValue">
+              <app-input-account [account]="account" [accountValue]="accountValue" [control]="formGroup.get(accountValue.id!.toString())!"
+                [inputGroup]="false" [showError]="validationService.fieldInvalid(accountValue.id!.toString())"
+                [errorMessage]="validationService.invalidMessage(accountValue.id!.toString())" [readonly]="inputMonthReadOnly(account)"></app-input-account>
+            </ng-container>
+          </td>
+      </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
+</form>

@@ -1,0 +1,36 @@
+<div class="flex w-full justify-content-between mb-5">
+  <app-title catalog="Dealer Groups" [titlePage]="id ? 'Edit' : 'Add'"></app-title>
+</div>
+
+<p-card class="w-min">
+  <form [formGroup]="dealerGroupForm" (ngSubmit)="submit()" class="grid">
+    <div class="col-12 lg:col-6 p-field">
+      <label for="name">Name Group</label>
+      <input
+        id="name" type="text"
+        pInputText formControlName="name"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('name')">
+        {{ validationService.invalidMessage("name") }}</small
+      >
+    </div>
+
+    <div class="col-12 lg:col-6 p-field"></div>
+
+    <div class="flex justify-content-between col-12 lg:col-6">
+      <button
+        pButton type="button"
+        label="Cancel" icon="pi pi-times"
+        class="p-button-danger" routerLink="/dealergroup/list"
+      ></button>
+
+      <button
+        pButton type="submit"
+        label="Save" icon="pi pi-check"
+        class="p-button-success" [disabled]="dealerGroupForm.invalid"
+        [loading]="submited"
+      ></button>
+    </div>
+  </form>
+</p-card>

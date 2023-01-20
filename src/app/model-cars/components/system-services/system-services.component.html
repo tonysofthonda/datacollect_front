@@ -1,0 +1,50 @@
+<div class="mb-5">
+  <div>
+    <div>
+      <label for="systemService">System Service</label>
+    </div>
+    <p-dropdown
+      class="mr-3" [options]="systemServices"
+      [formControl]="systemServiceControl" placeholder="Select"
+      appendTo="body" optionLabel="name"
+    >
+      <ng-template pTemplate="selectedItem">
+        <div>{{ systemServiceControl.value.name }}</div>
+      </ng-template>
+      <ng-template let-systemService pTemplate="item">
+        {{ systemService.name }}
+      </ng-template>
+    </p-dropdown>
+    <button
+      pButton type="button" label="Add"
+      class="p-button-info" [disabled]="systemServiceControl.invalid"
+      (click)="addSystemService()"
+    ></button>
+  </div>
+</div>
+
+<div style="width:30%" *ngIf="modelFormControl?.get('systemServices')?.value.length > 0">
+  <p-table
+  [value]="modelFormControl?.get('systemServices')?.value"
+  responsiveLayout="scroll"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>System Service</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-systemService>
+    <tr>
+      <td>{{ systemService.name }}</td>
+      <td>
+        <button
+          pButton type="button" icon="pi pi-times"
+          class="p-button-danger p-button-rounded"
+          (click)="removeSystemService(systemService.id)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>

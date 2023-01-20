@@ -1,0 +1,16 @@
+<div class="grid">
+  <div class="col-3">
+    <p-card
+      ><app-contact-form
+        [contactEdit]="contactEdit" (isSubmited)="setSubmitedForm($event)"
+      ></app-contact-form
+    ></p-card>
+  </div>
+  <div class="col-9">
+    <p-card
+      ><app-contact-list
+        [formSubmited]="formSubmited" (contactEdit)="setContactEdit($event)"
+      ></app-contact-list
+    ></p-card>
+  </div>
+</div>

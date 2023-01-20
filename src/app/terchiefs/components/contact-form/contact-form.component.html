@@ -1,0 +1,88 @@
+<form [formGroup]="contactForm" (ngSubmit)="submit()" class="grid">
+  <div class="col-12 p-field">
+    <label for="firstName">First Name</label>
+    <input
+      id="firstName" type="text"
+      pInputText formControlName="firstName"
+      class="w-full"
+    />
+    <small class="p-error" *ngIf="validationService.fieldInvalid('firstName')">
+      {{ validationService.invalidMessage("firstName") }}</small
+    >
+  </div>
+
+  <div class="col-12 p-field">
+    <label for="lastName">Last Name</label>
+    <input
+      id="lastName" type="text"
+      pInputText formControlName="lastName"
+      class="w-full"
+    />
+    <small class="p-error" *ngIf="validationService.fieldInvalid('lastName')">
+      {{ validationService.invalidMessage("lastName") }}</small
+    >
+  </div>
+
+  <div class="col-12 p-field">
+    <label for="motherLastName">Mother Last Name</label>
+    <input
+      id="motherLastName" type="text"
+      pInputText formControlName="motherLastName"
+      class="w-full"
+    />
+    <small
+      class="p-error" *ngIf="validationService.fieldInvalid('motherLastName')">
+      {{ validationService.invalidMessage("motherLastName") }}</small>
+  </div>
+
+  <div class="col-12 p-field">
+    <label for="phoneNumber">Phone Number</label>
+    <input
+      id="phoneNumber" type="number"
+      pInputText formControlName="phoneNumber"
+      class="w-full"
+    />
+    <small
+      class="p-error" *ngIf="validationService.fieldInvalid('phoneNumber')">
+      Invalid Phone Number</small
+    >
+  </div>
+
+  <div class="col-12 p-field">
+    <label for="email">Email</label>
+    <input
+      id="email" type="text"
+      pInputText formControlName="email"
+      class="w-full"
+    />
+    <small class="p-error" *ngIf="validationService.fieldInvalid('email')">
+      {{ validationService.invalidMessage("email") }}</small
+    >
+  </div>
+
+  <div class="col-12 p-field">
+    <label for="notes">Notes</label>
+    <input
+      id="notes" type="text"
+      pInputText formControlName="notes"
+      class="w-full"
+    />
+  </div>
+
+  <div>
+    <button
+      pButton type="button"
+      label="Cancel" icon="pi pi-times"
+      class="p-button-danger mr-2" *ngIf="contactId"
+      (click)="cancelEdit()"
+    ></button>
+
+    <button
+      pButton type="submit"
+      [label]="contactId ? 'Edit' : 'Save'" icon="pi pi-check"
+      [ngClass]="{ 'p-button-success': !contactId, 'p-button-warning': contactId }"
+      [disabled]="contactForm.invalid"
+      [loading]="localSubmited"
+    ></button>
+  </div>
+</form>

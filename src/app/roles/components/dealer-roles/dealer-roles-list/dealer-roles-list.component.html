@@ -1,0 +1,45 @@
+<div class="flex justify-content-end mb-2">
+  <app-search (termEvent)="setTerm($event)"></app-search>
+</div>
+
+<p-table
+  [value]="roleService.positionsFormSelected" responsiveLayout="scroll" [paginator]="true"
+  [rows]="10" [totalRecords]="roleService.positionsFormSelected.length"
+  [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[10, 25, 50, 100]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="jobId">
+          Dealer Role <p-sortIcon field="jobId"></p-sortIcon>
+        </th>
+        <th pSortableColumn="name">
+          Description <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-position>
+      <tr>
+        <td>{{ position.jobId }}</td>
+        <td>{{ position.name }}</td>
+        <td>
+          <button
+            pButton icon="pi pi-user-edit"
+            class="mr-2 p-button-warning p-button-rounded"
+            (click)="setPositionEdit(position)"
+          ></button
+          ><button
+            pButton icon="pi pi-times"
+            class="p-button-danger p-button-rounded"
+            (click)="removePosition(position.jobId)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8"><h2>Without Dealer Roles</h2></td>
+      </tr>
+    </ng-template>
+  </p-table>

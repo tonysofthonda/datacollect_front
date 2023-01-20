@@ -1,0 +1,29 @@
+<form [formGroup]="formGroup" >
+  <p-table [columns]="typeValues" [value]="accounts" responsiveLayout="scroll" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header" let-typeValues>
+        <tr>
+            <th>Nombre de la cuenta</th>
+            <th>No. de la cuenta</th>
+            <th *ngFor="let typeValue of typeValues">
+                {{typeValue.name}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-account let-typeValues="columns">
+      <tr>
+        <td>{{account.name || ''}}</td>
+        <td>{{account.accountNumber || ''}}</td>
+        <ng-container *ngFor="let typeValue of typeValues">
+            <td>
+              <ng-container *ngIf="getAccountValue(account,typeValue) as accountValue">
+                <app-input-account [account]="account" [accountValue]="accountValue" [control]="formGroup.get(accountValue.id!.toString())!"
+                  [inputGroup]="false" [showError]="validationService.fieldInvalid(accountValue.id!.toString())"
+                  [errorMessage]="validationService.invalidMessage(accountValue.id!.toString())"></app-input-account>
+              </ng-container>
+
+            </td>
+        </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
+</form>

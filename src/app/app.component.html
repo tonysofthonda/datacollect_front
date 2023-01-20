@@ -1,0 +1,5 @@
+<div *ngIf="isLoader" class="screen-loader">
+  <p-progressBar mode="indeterminate"></p-progressBar>
+</div>
+<app-main></app-main>
+<p-toast position="bottom-right" [baseZIndex]="9999999999999999"></p-toast>

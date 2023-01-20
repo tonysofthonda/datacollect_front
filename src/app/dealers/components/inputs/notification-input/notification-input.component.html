@@ -1,0 +1,56 @@
+<div class="mb-5">
+  <div>
+    <div>
+      <label for="notification">Notification</label>
+    </div>
+    <p-dropdown
+      class="mr-3" [options]="systemServices"
+      [formControl]="notificationsControl" placeholder="Select"
+      appendTo="body" optionLabel="name"
+    >
+      <ng-template pTemplate="selectedItem">
+        <div>{{ notificationsControl?.value.name }}</div>
+      </ng-template>
+      <ng-template let-notification pTemplate="item">
+        {{ notification.name }}
+      </ng-template>
+    </p-dropdown>
+    <button
+      pButton type="button" label="Add"
+      class="p-button-info" [disabled]="notificationsControl.invalid"
+      (click)="addNotification()"
+    ></button>
+  </div>
+  <small
+    class="p-error"
+    *ngIf="validationService.fieldInvalid(notificationsControl)">
+    {{
+      validationService.invalidMessage(notificationsControl, "Notification")
+    }}</small>
+</div>
+
+<div *ngIf="contactFormControl?.get('notifications')?.value.length > 0">
+  <p-table
+  [value]="contactFormControl?.get('notifications')?.value"
+  responsiveLayout="scroll"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>System Service</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-systemService>
+    <tr>
+      <td>{{ systemService.name }}</td>
+      <td>
+        <button
+          pButton type="button" icon="pi pi-times"
+          class="p-button-danger p-button-rounded"
+          (click)="removeNotification(systemService.id)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>

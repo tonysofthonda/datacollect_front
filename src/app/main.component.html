@@ -1,0 +1,35 @@
+<div
+  class="layout-container"
+  (click)="onWrapperClick()"
+  [ngClass]="{
+    'layout-menu-horizontal': horizontal,
+    'layout-menu-vertical': !horizontal,
+    'layout-menu-active': menuActive,
+    'layout-top-small': topbarSize === 'small',
+    'layout-top-medium': topbarSize === 'medium',
+    'layout-top-large': topbarSize === 'large',
+    'p-ripple-disabled': !ripple,
+    'p-input-filled': inputStyle === 'filled'
+  }"
+  [class]="topbarColor + ' ' + menuColor"
+>
+  <div class="layout-top">
+    <app-topbar></app-topbar>
+    <div class="layout-topbar-separator"></div>
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="layout-content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="layout-mask" *ngIf="menuActive" [@mask-anim]="'visible'"></div>
+
+  <app-footer></app-footer>
+
+  <div
+    class="layout-config-mask"
+    *ngIf="configDialogActive"
+    [@mask-anim]="'visible'"
+  ></div>
+</div>

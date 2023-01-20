@@ -1,0 +1,33 @@
+<div class="flex w-full justify-content-between mb-5">
+  <app-title catalog="Roles" [titlePage]="id ? 'Edit' : 'Add'"></app-title>
+</div>
+
+
+<p-card>
+  <p-tabView>
+    <p-tabPanel header="General">
+       <app-general-form (roleFormChange)="setRoleForm($event)"></app-general-form>
+    </p-tabPanel>
+    <p-tabPanel header="System Roles">
+        <app-system-roles-form></app-system-roles-form>
+    </p-tabPanel>
+    <p-tabPanel header="Permissions">
+        <app-permissions-form></app-permissions-form>
+    </p-tabPanel>
+  </p-tabView>
+
+  <div class="flex justify-content-between col-12 lg:col-6">
+    <button
+      pButton type="button"
+      label="Cancel" icon="pi pi-times"
+      class="p-button-danger" routerLink="/role/list"
+    ></button>
+
+    <button
+        pButton type="button"
+        [disabled]="roleForm?.invalid"
+        label="Save All" icon="pi pi-check"
+        class="p-button-success" (click)="submit()">
+      </button>
+  </div>
+</p-card>

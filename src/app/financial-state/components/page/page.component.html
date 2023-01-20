@@ -1,0 +1,64 @@
+<p-accordion>
+  <p-accordionTab *ngFor="let mainAccount of mainAccounts" [header]="mainAccount.name!" (selectedChange)="showAccounts($event, mainAccount.id!)">
+    <app-accounts-loading *ngIf="loading"></app-accounts-loading>
+    <div *ngIf="!loading">
+
+      <div>
+        <ng-container
+          *ngTemplateOutlet="recursiveAccountChildren; context:{ rels: accountRels }"
+        ></ng-container>
+      </div>
+
+      <ng-template #recursiveAccountChildren let-rels="rels">
+        <div class="flex flex-column flex-column-reverse" *ngFor="let rel of rels">
+          <app-account [formGroup]="pageForm" *ngIf="!rel.child.children" [account]="rel.child" [parent]="rel.parent"></app-account>
+          <div class="flex flex-column flex-column-reverse" *ngIf="rel.child.children?.length > 0" [ngSwitch]="rel.child.component?.name">
+
+            <div *ngSwitchCase="accountComponent.TOTAL_FIXED_ASSETS" >
+              <p-fieldset [collapsed]="true" [legend]="rel.child.name" [toggleable]="true">
+                <app-account-total-fixed-assets [formGroup]="pageForm" [account]="rel.child"></app-account-total-fixed-assets>
+              </p-fieldset>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.TOTAL_UNITS_PASIVES" >
+              <p-fieldset [collapsed]="true" legend="Total de unidades" [toggleable]="true">
+                <app-account-total-units-pasives [formGroup]="pageForm" [account]="rel.child"></app-account-total-units-pasives>
+              </p-fieldset>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.ACCOUNTS_RECEIVABLE_ANALYSIS" >
+              <app-account-receivable-analysis [formGroup]="pageForm" [account]="rel.child"></app-account-receivable-analysis>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.GROSS_PROFIT_ANALYSIS" >
+              <app-account-gross-profit-analysis [formGroup]="pageForm" [account]="rel.child"></app-account-gross-profit-analysis>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.PAGE_2_3" >
+              <app-account-page-two-and-three [formGroup]="pageForm" [account]="rel.child"></app-account-page-two-and-three>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.POSITIONS" >
+              <app-account-job-levels [formGroup]="pageForm" [account]="rel.child"></app-account-job-levels>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.OTHER_INCOME" >
+              <app-account-other-income [formGroup]="pageForm" [account]="rel.child"></app-account-other-income>
+            </div>
+
+            <div *ngSwitchCase="accountComponent.INCOME_DEDUCTIONS" >
+              <app-account-income-deduction [formGroup]="pageForm" [account]="rel.child"></app-account-income-deduction>
+            </div>
+            <p-fieldset [collapsed]="true" [legend]="rel.child.name" [toggleable]="true" *ngSwitchDefault>
+              <app-account [formGroup]="pageForm" [account]="rel.child" [parent]="rel.parent"></app-account>
+              <ng-container
+                *ngTemplateOutlet="recursiveAccountChildren; context:{ rels: rel.child.children }"
+              ></ng-container>
+          </p-fieldset>
+          </div>
+        </div>
+
+      </ng-template>
+    </div>
+  </p-accordionTab>
+</p-accordion>

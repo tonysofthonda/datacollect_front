@@ -1,0 +1,26 @@
+.p-inputgroup.formula{
+  opacity: 0.8;
+  cursor: default;
+}
+
+.p-inputgroup.formula input{
+  cursor: default;
+}
+
+.p-inputgroup.formula .p-inputtext{
+  &:enabled{
+    &:hover{
+      border-color: rgba(0, 0, 0, 0.38);
+    }
+    &:focus{
+      outline: 0;
+      outline-offset: 0;
+      box-shadow: none;
+      border-color: none;
+    }
+  }
+}
+
+.disabled-by-state {
+  opacity: 1;
+}

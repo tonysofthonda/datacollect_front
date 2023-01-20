@@ -1,0 +1,47 @@
+<form [formGroup]="filterForm" class="grid">
+  <div class="col-12 lg:col-4 p-field">
+    <p-dropdown
+      [options]="dealerGroups" formControlName="dealerGroupId"
+      placeholder="Grupo de distribuidores" optionValue="id"
+      appendTo="body" optionLabel="name"
+      [showClear]="true" autoWidth="false"
+      [style]="{'width':'100%'}"
+    >
+    </p-dropdown>
+  </div>
+  <div class="col-12 lg:col-4 p-field">
+    <p-dropdown
+      [options]="dealers" formControlName="dealerId"
+      placeholder="Distribuidor" optionValue="id"
+      appendTo="body" [showClear]="true"
+      emptyMessage="Selecciona un grupo con distribuidores"
+      autoWidth="false" [style]="{'width':'100%'}"
+    >
+      <ng-template pTemplate="selectedItem">
+        {{selectedDealer?.dealerNumber }} - {{selectedDealer?.name}}
+      </ng-template>
+      <ng-template let-dealer pTemplate="item">
+        {{dealer.dealerNumber }} - {{dealer.name}}
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <div class="col-12 lg:col-4 p-field">
+    <p-calendar dateFormat="mm/yy" view="month"
+      placeholder="Fecha" [minDate]="minDate"
+      [style]="{'width':'100%'}" [readonlyInput]="true"
+      #calendar [showIcon]="true">
+    </p-calendar>
+  </div>
+
+  <div class="col-12 lg:col-4 p-field">
+    <p-dropdown
+      [options]="statuses" formControlName="statusId"
+      placeholder="Estado" optionValue="id"
+      appendTo="body" optionLabel="name"
+      [showClear]="true" autoWidth="false"
+      [style]="{'width':'100%'}"
+    >
+    </p-dropdown>
+  </div>
+</form>

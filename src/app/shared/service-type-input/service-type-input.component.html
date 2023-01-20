@@ -1,0 +1,47 @@
+<div class="mb-5">
+  <div>
+    <div>
+      <label for="serviceType">Service Type</label>
+    </div>
+    <p-dropdown
+      class="mr-3" [options]="serviceTypes"
+      [formControl]="serviceTypeControl" placeholder="Select"
+      appendTo="body" optionLabel="name"
+    >
+      <ng-template pTemplate="selectedItem">
+        <div>{{ serviceTypeControl.value.name }}</div>
+      </ng-template>
+    </p-dropdown>
+    <button
+      pButton type="button" label="Add"
+      class="p-button-info" [disabled]="serviceTypeControl.invalid"
+      (click)="addServiceType()"
+    ></button>
+  </div>
+</div>
+
+<div style="width:30%" *ngIf="formInputControl?.value.length > 0">
+  <p-table
+  [value]="formInputControl?.value!"
+  responsiveLayout="scroll"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Services</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-serviceType>
+    <tr>
+      <td>{{ serviceType.name }}</td>
+      <td>
+        <button
+          pButton type="button" icon="pi pi-times"
+          class="p-button-danger p-button-rounded"
+          (click)="removeServiceType(serviceType.id)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>

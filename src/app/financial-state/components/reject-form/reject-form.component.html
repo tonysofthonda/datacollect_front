@@ -1,0 +1,30 @@
+<form [formGroup]="rejectForm" class="grid" (ngSubmit)="handleSubmit()">
+  <div class="col-12 p-field">
+    <label for="date">Fecha limite</label>
+    <p-calendar dateFormat=" dd/mm/yy"  placeholder="Nueva fecha limite"
+      [style]="{'width':'100%'}" [readonlyInput]="true" [minDate]="minDate" [maxDate]="maxDate"
+      #calendar [showIcon]="true" id="date" [showWeek]="true">
+    </p-calendar>
+    <small class="p-error" *ngIf="validationService.fieldInvalid('limitDate')">
+      {{ validationService.invalidMessage("limitDate") }}</small>
+  </div>
+
+  <div class="col-12 p-field">
+    <label for="reason">Motivo</label>
+    <div [style]="{'width':'100%'}">
+      <input id="reason" type="text" pInputText [style]="{'width':'100%'}" formControlName="reason"/>
+    </div>
+    <small class="p-error" *ngIf="validationService.fieldInvalid('reason')">
+      {{ validationService.invalidMessage("reason") }}</small>
+  </div>
+
+  <div class="col-12" *ngIf="financialStateFormService.accountErrors.length > 0">
+    <app-account-errors-list [accountErrors]="financialStateFormService.accountErrors"></app-account-errors-list>
+  </div>
+
+  <div class="flex justify-content-end col-12">
+    <p-button label="Finalizar rechazo" type="submit" icon="pi pi-check-circle"></p-button>
+  </div>
+</form>
+
+

@@ -1,0 +1,44 @@
+<p-virtualScroller [value]="statuses" scrollHeight="500px" [itemSize]="100" [minBufferPx]="500" [maxBufferPx]="1000">
+  <ng-template let-status pTemplate="item">
+     <div class="status-item">
+      <div class="main">
+        <p-card [ngClass]="{
+          'stateless': status.status.name === enum.STATELESS,
+          'progress': status.status.name === enum.IN_PROGRESS,
+          'locked': status.status.name === enum.LOCKED,
+          'sent': status.status.name === enum.SENT,
+          'approved': status.status.name === enum.APPROVED,
+          'rejected': status.status.name === enum.REJECTED,
+          'commented': status.status.name === enum.COMMENTED
+        }" [pTooltip]="status.status.description" tooltipPosition="top">
+          <ng-template pTemplate="content">
+            {{status.status.name}}
+          </ng-template>
+        </p-card>
+
+        <div class="info">
+          <div class="date">
+            <i class="pi pi-calendar"></i>
+            <h5>{{status.dateAssignment | date:'MMMM d, y - h:mm a':undefined:'es-MX'}}</h5>
+          </div>
+          <div class="username"><span class="prefix">Insertado por:</span> {{status.username || 'el sistema'}}</div>
+          <div class="email" *ngIf="status.email"><span class="prefix">Correo:</span> {{status.email}}</div>
+        </div>
+      </div>
+
+      <div class="extra-info">
+        <div class="area-type">
+          <div *ngIf="status.area" class="area"><span class="prefix">Area:</span> {{status.area.name}}</div>
+          <i *ngIf="status.userType" class="pi pi-users p-mr-4 p-text-secondary" pBadge style="font-size: 2.5rem" [value]="status.userType.name" severity="danger"></i>
+        </div>
+        <button *ngIf="hasDetails(status)" (click)="showStatusDetail(status)" pButton pRipple type="button" icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+      </div>
+
+    </div>
+    <p-divider></p-divider>
+  </ng-template>
+</p-virtualScroller>
+
+<p-dialog [modal]="true" [(visible)]="showStatusDetails" [style]="{ width: '50vw' }" header="Comentarios">
+  <p>{{statusSelected?.comments}}</p>
+</p-dialog>

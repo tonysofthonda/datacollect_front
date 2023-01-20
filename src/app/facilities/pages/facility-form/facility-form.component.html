@@ -1,0 +1,43 @@
+<div class="flex w-full justify-content-between mb-5">
+  <app-title catalog="Facilities" [titlePage]="id ? 'Edit' : 'Add'"></app-title>
+</div>
+
+<p-card class="w-min">
+  <form [formGroup]="facilityForm" (ngSubmit)="submit()" class="grid">
+    <div class="col-12 lg:col-6 p-field">
+      <label for="concept">Concept</label>
+      <input
+        id="concept" type="text"
+        pInputText formControlName="concept"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('concept')">
+        Concept required</small
+      >
+    </div>
+
+    <div class="col-12 p-field">
+      <label for="description">Description</label>
+      <textarea
+        id="description" pInputTextarea
+        formControlName="description" class="w-full"
+        rows="5" [autoResize]="true"
+      ></textarea>
+    </div>
+
+    <div class="flex justify-content-between col-12 lg:col-6">
+      <button
+        pButton type="button" label="Cancel"
+        icon="pi pi-times" class="p-button-danger"
+        routerLink="/facility/list"
+      ></button>
+
+      <button
+        pButton type="submit"
+        label="Save" icon="pi pi-check"
+        class="p-button-success"
+        [disabled]="facilityForm.invalid" [loading]="submited"
+      ></button>
+    </div>
+  </form>
+</p-card>

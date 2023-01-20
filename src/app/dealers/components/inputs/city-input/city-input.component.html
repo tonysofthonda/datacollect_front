@@ -1,0 +1,46 @@
+<div class="grid">
+  <div class="col-6 p-field">
+    <div>
+      <label for="state">State</label>
+    </div>
+    <p-dropdown
+      [options]="states" [style]="{'width':'100%'}"
+      [formControl]="stateControl" placeholder="Select"
+      appendTo="body" id="state" autoWidth="false"
+      optionLabel="name"
+    >
+      <ng-template pTemplate="selectedItem">
+        <div>{{ stateControl?.value?.name }}</div>
+      </ng-template>
+      <ng-template let-state pTemplate="item">
+        {{ state.name }}
+      </ng-template>
+    </p-dropdown>
+
+    <small class="p-error" *ngIf="validationService.fieldInvalid('state')">
+      {{ validationService.invalidMessage("state") }}</small>
+  </div>
+
+  <div class="col-6 p-field">
+    <div>
+      <label for="city">City</label>
+    </div>
+    <p-dropdown
+      [options]="cities" [style]="{'width':'100%'}"
+      [formControl]="cityControl" placeholder="Select"
+      appendTo="body" id="city" autoWidth="false" optionLabel="name"
+      emptyMessage="Select a state first"
+    >
+      <ng-template pTemplate="selectedItem">
+        <div>{{ cityControl?.value?.name }}</div>
+      </ng-template>
+      <ng-template let-city pTemplate="item">
+        {{ city.name }}
+      </ng-template>
+    </p-dropdown>
+
+    <small class="p-error" *ngIf="validationService.fieldInvalid('city')">
+      {{ validationService.invalidMessage("city") }}</small>
+  </div>
+
+</div>

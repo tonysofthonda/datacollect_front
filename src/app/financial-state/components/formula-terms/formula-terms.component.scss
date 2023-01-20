@@ -1,0 +1,32 @@
+.container{
+  margin-top: 10px;
+}
+
+
+:host ::ng-deep .p-accordion{
+  .p-accordion-content{
+    height: 300px;
+    overflow: scroll;
+  }
+}
+
+:host ::ng-deep .p-inputgroup{
+  width: 500px;
+  .p-inputgroup-addon{
+    width: 100px;
+  }
+}
+
+.p-button{
+  margin-right: 1rem;
+}
+
+.p-button.p-button-icon-only{
+  width: 2rem;
+  height: 2rem;
+}
+
+hr.rounded {
+  border-top: 2px solid #DEE2E6;
+  border-radius: 5px;
+}

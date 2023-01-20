@@ -1,0 +1,18 @@
+<div>
+  <label for="facility">Facility</label>
+</div>
+<p-dropdown
+  class="mr-3" [options]="facilities" [style]="{'width':'100%'}"
+  [formControl]="facilityControl" placeholder="Select"
+  appendTo="body" id="facility" autoWidth="false" optionLabel="concept"
+>
+  <ng-template pTemplate="selectedItem">
+    <div>{{ facilityControl?.value?.concept }}</div>
+  </ng-template>
+  <ng-template let-facility pTemplate="item">
+    {{ facility.concept }}
+  </ng-template>
+</p-dropdown>
+
+<small class="p-error" *ngIf="validationService.fieldInvalid('facility')">
+  {{ validationService.invalidMessage("facility") }}</small>

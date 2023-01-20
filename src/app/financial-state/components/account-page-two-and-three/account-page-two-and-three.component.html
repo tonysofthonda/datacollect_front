@@ -1,0 +1,55 @@
+<form [formGroup]="formGroup" class="mt-4">
+  <p-table [columns]="headerTypeValues" [value]="accounts" styleClass="p-datatable-gridlines" [virtualScroll]="true" responsiveLayout="scroll" [virtualRowHeight]="20" [rows]="accounts.length" scrollHeight="500px">
+    <ng-template pTemplate="header" let-headerTypeValues>
+        <tr>
+          <th [attr.rowspan]="totalHeaderRows">Nombre de la cuenta</th>
+          <th [attr.rowspan]="totalHeaderRows">Numero de cuenta</th>
+          <th  *ngFor="let typeValue of headerTypeValues" [attr.rowspan]="rowSpan(typeValue)" [attr.colspan]="typeValue.children?.length || 1" [ngStyle]="{'min-width':'500px'}">
+            {{typeValue.name}}
+          </th>
+        </tr>
+
+        <tr>
+          <ng-container *ngFor="let typeValue of headerTypeValues">
+            <ng-container *ngIf="typeValue.children">
+
+                <ng-container
+                  *ngTemplateOutlet="recursiveTypeValueChildren; context:{ rels: typeValue.children }"
+                ></ng-container>
+
+            </ng-container>
+          </ng-container>
+        </tr>
+
+        <ng-template #recursiveTypeValueChildren let-rels="rels">
+            <th  *ngFor="let rel of rels" [attr.rowspan]="rowSpan(rel.child)" [attr.colspan]="rel.child.children?.length || 1">
+              {{rel.child.name || ''}}
+            </th>
+
+          <ng-container *ngFor="let rel of rels">
+            <ng-container *ngIf="rel.child.children">
+                <ng-container
+                  *ngTemplateOutlet="recursiveTypeValueChildren; context:{ rels: rel.child.children }"
+                ></ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-account>
+      <tr style="height:40px">
+        <td [ngClass]="{'font-bold':account.relationshipCheck.hasChildren}">{{ account?.name || ''}}</td>
+        <td>{{account.accountNumber || ''}}</td>
+        <ng-container *ngFor="let typeValue of typeValues">
+          <td>
+            <ng-container *ngIf="getAccountValue(account,typeValue) as accountValue">
+              <app-input-account [account]="account" [accountValue]="accountValue" [control]="formGroup.get(accountValue.id!.toString())!"
+                [inputGroup]="false" [showError]="validationService.fieldInvalid(accountValue.id!.toString())"
+                [errorMessage]="validationService.invalidMessage(accountValue.id!.toString())"></app-input-account>
+            </ng-container>
+          </td>
+      </ng-container>
+      </tr>
+    </ng-template>
+  </p-table>
+</form>

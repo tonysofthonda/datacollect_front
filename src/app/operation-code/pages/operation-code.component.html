@@ -1,0 +1,61 @@
+<p-card class="header-card">
+  <div class="flex w-full justify-content-between mb-5">
+    <app-title catalog="Operations Code" titlePage="List"></app-title>
+
+    <div class="flex flex-column align-items-end">
+      <button
+        pButton label="New"
+        class="p-button-info mb-3" routerLink="/operationcodes/add"
+      ></button>
+
+      <app-search (termEvent)="setTerm($event)"></app-search>
+    </div>
+  </div>
+</p-card>
+
+<p-card>
+  <p-table
+    [value]="paginatedOperationCode.result" responsiveLayout="scroll"
+    [paginator]="true" [rows]="paginatedOperationCode.elementsByPage"
+    [totalRecords]="paginatedOperationCode.totalElements" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 25, 50, 100]"
+    [loading]="loading" [lazy]="true"
+    (onLazyLoad)="loadOperationCode($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="code">
+          Code <p-sortIcon field="code"></p-sortIcon>
+        </th>
+        <th pSortableColumn="description">
+          Description <p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th pSortableColumn="serviceTypesNames">
+          Service Type <p-sortIcon field="serviceTypesNames"></p-sortIcon>
+        </th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-operationCode>
+      <tr>
+        <td>{{ operationCode.code }}</td>
+        <td>{{ operationCode.description }}</td>
+        <td>{{ operationCode.serviceTypesNames }}</td>
+        <td>
+          <button
+            pButton icon="pi pi-user-edit"
+            class="mr-2 p-button-warning p-button-rounded" [routerLink]="['/operationcodes/edit/', operationCode.id]"
+          ></button
+          >
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8"><h2>No records found</h2></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-confirmDialog rejectButtonStyleClass="p-button-text"></p-confirmDialog>

@@ -1,0 +1,18 @@
+  <div>
+    <label for="dealerGroup">Dealer Group</label>
+  </div>
+  <p-dropdown
+    class="mr-3" [options]="dealersGroups" [style]="{'width':'100%'}"
+    [formControl]="dealerGroupControl" placeholder="Select"
+    appendTo="body" id="state" autoWidth="false" optionLabel="name"
+  >
+    <ng-template pTemplate="selectedItem">
+      <div>{{ dealerGroupControl?.value?.name }}</div>
+    </ng-template>
+    <ng-template let-dealerGroup pTemplate="item">
+      {{ dealerGroup.name }}
+    </ng-template>
+  </p-dropdown>
+
+  <small class="p-error" *ngIf="validationService.fieldInvalid('dealerGroup')">
+    {{ validationService.invalidMessage("dealerGroup") }}</small>

@@ -1,0 +1,35 @@
+<div class="container">
+  <p-accordion>
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger" (click)="close()"></button>
+        <span>{{formulaHeader}}</span>
+      </ng-template>
+      <ng-template pTemplate="content">
+
+        <div>
+          <label>Resultado: </label>
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">{{getNameAccount(formula!.ownerAccount)}}</span>
+            <input
+              type="text" pInputText [readonly]="true"
+              [pTooltip]="formulaDesc(formula!.ownerAccount)" tooltipPosition="top"
+              [value]="getFormValue(formula!.ownerAccount.id!)"
+            >
+          </div>
+        </div>
+
+        <hr class="mb-2 mt-2 rounded">
+
+        <div *ngFor="let accountValue of accountsValues" class="p-inputgroup mb-2">
+          <span class="p-inputgroup-addon">{{getNameAccount(accountValue)}}</span>
+          <input
+            type="text" pInputText [readonly]="true"
+            [pTooltip]="formulaDesc(accountValue)" tooltipPosition="top"
+            [value]="getFormValue(accountValue.id!)"
+          >
+        </div>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+</div>

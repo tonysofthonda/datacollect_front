@@ -1,0 +1,8 @@
+<div class="grid">
+  <div class="col-6">
+    <app-dealer-roles-form [positionEdit]="positionEdit" (positionSubmited)="setPositionSubmited($event)"></app-dealer-roles-form>
+  </div>
+  <div class="col-6">
+    <app-dealer-roles-list [positionSubmited]="positionSubmited" (positionEdit)="setPositionEdit($event)"></app-dealer-roles-list>
+  </div>
+</div>

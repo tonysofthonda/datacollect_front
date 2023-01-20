@@ -1,0 +1,18 @@
+.layout-title {
+  display: flex;
+  align-items: center;
+}
+
+.layout-title h1 {
+  height: 30px;
+}
+
+.layout-title h1 a {
+  color: var(--surface-a);
+}
+
+@media screen and (max-width: 1025px) {
+  .layout-title h1 {
+    margin-left: 2em;
+  }
+}

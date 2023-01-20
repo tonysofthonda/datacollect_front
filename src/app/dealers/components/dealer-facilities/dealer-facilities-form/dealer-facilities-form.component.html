@@ -1,0 +1,33 @@
+<p-card>
+  <form [formGroup]="dealerFacilityForm" (ngSubmit)="submit()" class="grid">
+    <div class="col-12 p-field">
+      <app-facility-input [facilityControl]="facilityControl" [validationService]="validationService"></app-facility-input>
+    </div>
+
+    <div class="col-12 p-field">
+      <label for="quantity">Quantity</label>
+      <input
+        id="quantity" type="number" pInputText
+        formControlName="quantity"class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('quantity')">
+        {{ validationService.invalidMessage("quantity") }}</small>
+    </div>
+
+    <div class="col-12 flex justify-content-end">
+      <button
+        pButton type="button"
+        label="Cancel" icon="pi pi-times"
+        class="p-button-danger mr-2" *ngIf="facilityId"
+        (click)="cancelEdit()"
+      ></button>
+
+      <button
+        pButton type="submit"
+        [label]="facilityId ? 'Edit' : 'Save'" icon="pi pi-check"
+        [ngClass]="{ 'p-button-success': !facilityId, 'p-button-warning': facilityId }"
+        [disabled]="dealerFacilityForm.invalid || dealerFacilityForm.pending"
+      ></button>
+    </div>
+  </form>
+</p-card>

@@ -1,0 +1,38 @@
+.user-modal {
+  width: calc(100% + 1.5rem);
+  background-color: #D0664E;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 -0.75rem;
+  margin-top: -0.75rem;
+  color: var(--surface-a);
+
+  * {
+    margin: 3px 0;
+  }
+
+  img {
+    width: 8rem;
+  }
+
+  .username {
+    font-weight: bold;
+  }
+
+  .user-creation-date {
+    font-weight: lighter;
+    font-style: italic;
+  }
+}
+
+.more {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-top: 20px;
+    float: inline-end;
+  }
+}

@@ -1,0 +1,115 @@
+<div class="progress-spinner" *ngIf="btnExcelDisabled">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<p-card class="header-card">
+  <div class="flex w-full justify-content-between align-items-center mb-5">
+    <app-title catalog="Estados Financieros" titlePage=""></app-title>
+    <app-financial-state-xlsx-button></app-financial-state-xlsx-button>
+  </div>
+  <div>
+    <app-financial-state-filter (filterChange)="changeFilterFormValues($event)" [resetForm]="!filter"></app-financial-state-filter>
+    <div>
+
+      <button
+        pButton type="button"
+        label="Quitar filtro" class="p-button-danger mr-2"
+        icon="pi pi-times" (click)="onFilter(false)"
+        *ngIf="filter">
+      </button>
+
+      <button
+        pButton type="button"
+        label="Buscar" class="p-button-info mr-2"
+        icon="pi pi-search" (click)="onFilter(true)">
+      </button>
+
+      <button
+        pButton type="button"
+        label="Cambiar Fecha" class="p-button-info"
+        icon="pi pi-calendar" (click)="onChangeLimitDates()">
+      </button>
+    </div>
+  </div>
+</p-card>
+
+
+<p-card>
+  <p-table
+    [value]="paginatedFinancialStates.result" responsiveLayout="scroll"
+    [paginator]="true" [rows]="paginatedFinancialStates.elementsByPage"
+    [totalRecords]="paginatedFinancialStates.totalElements" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50, 100]" [loading]="loading" [loading]="loading" [lazy]="true"
+    (onLazyLoad)="loadFinancialStates($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="dealerText">
+          Distribuidor <p-sortIcon field="dealerText"></p-sortIcon>
+        </th>
+        <th pSortableColumn="monthText">
+          Mes <p-sortIcon field="monthText"></p-sortIcon>
+        </th>
+        <th pSortableColumn="year">
+          Año <p-sortIcon field="year"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastStatus">
+          Estatus <p-sortIcon field="lastStatus.status.name"></p-sortIcon>
+        </th>
+        <th class="text-center">Cambiar Fecha <p-checkbox [(ngModel)]="allFinancialStatesSelected" (onChange)="setPageFinancialStatesSelected($event)" [binary]="true"></p-checkbox></th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-financialState>
+      <tr>
+        <td>{{ financialState.dealerText }}</td>
+        <td>{{ financialState.monthText | titlecase }}</td>
+        <td>{{ financialState.year }} </td>
+        <td>{{ financialState.lastStatus.status.name }}</td>
+        <td class="text-center">
+          <p-checkbox name="changeLimitDate" [value]="financialState" [ngModel]="financialStateSelected" (ngModelChange)="selectFinancialState($event)"></p-checkbox>
+        </td>
+        <td>
+          <button
+            pButton type="button"
+            label="Detalles" class="p-button-info mr-2"
+            icon="pi pi-eye" [routerLink]="['/financialstate/form/', financialState.id]">
+          </button> <br /> <br />
+
+          <p-fileUpload  *ngIf="financialState.flatBtnExcel && financialState.lastStatus.status.name === 'Rechazado'"
+           #fileUpload chooseLabel="Archivo" [customUpload]="true"
+          (uploadHandler)="onFileUploadClicked($event, financialState.id)"
+          (onSelect)="onSelectFile($event, fileUpload)"
+          [disabled]="btnExcelDisabled"
+          mode="basic"></p-fileUpload> <br /> 
+
+          <button *ngIf="financialState.lastStatus.status.name === 'Rechazado'"
+            pButton type="button"
+            label="Reactivar" class="p-button-success mr-2"
+            icon="pi pi-replay"
+            (click)="resstartStatusProgress(financialState.id)">
+          </button>
+
+          <app-financial-state-pdf-button [financialState]="financialState"></app-financial-state-pdf-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8"><h2>No records found</h2></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<h3 class="text-center">NOTA: DESCARGAR LAYOUT PARA CONSULTAR NUEVOS MODELOS</h3>
+
+<p-dialog
+  header="Cambiar fecha" [modal]="true"
+  [style]="{ width: '70vw' }" [(visible)]="showChangeLimitDateForm"
+  [draggable]="false" [resizable]="false"
+>
+  <app-limit-date-change-form [financialStateSelected]="financialStateSelected" (onCloseForm)="onFilter(false)"></app-limit-date-change-form>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>

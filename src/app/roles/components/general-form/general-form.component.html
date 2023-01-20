@@ -1,0 +1,21 @@
+<form [formGroup]="roleForm" class="grid">
+  <div class="col-12 lg:col-6 p-field">
+    <label for="name">Role</label>
+    <input
+      id="name" type="text" pInputText
+      formControlName="name"class="w-full"
+    />
+    <small class="p-error" *ngIf="validationService.fieldInvalid('name')">
+      {{ validationService.invalidMessage("name") }}</small
+    >
+  </div>
+  <div class="col-12 lg:col-6 p-field"></div>
+    <div class="col-12 lg:col-6 p-field">
+      <label for="description">Description</label>
+      <textarea
+        id="description" pInputTextarea
+        formControlName="description" class="w-full"
+        rows="2" [autoResize]="true"
+      ></textarea>
+    </div>
+</form>

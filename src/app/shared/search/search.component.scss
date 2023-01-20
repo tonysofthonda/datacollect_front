@@ -1,0 +1,35 @@
+.times-icon {
+  cursor: pointer;
+}
+
+.p-inputgroup{
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 4px;
+  cursor: text;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+
+  .p-inputtext{
+    border: none;
+
+    &:enabled{
+      &:focus{
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: none;
+        border-color: none;
+      }
+    }
+  }
+  .p-inputgroup-addon{
+    border: none;
+  }
+
+  &:focus-within {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 1px var(--info), inset 0 0 0 1px var(--info),
+      inset 0 0 0 1px var(--info), inset 0 0 0 1px var(--info);
+    border-color: var(--info);
+  }
+
+}

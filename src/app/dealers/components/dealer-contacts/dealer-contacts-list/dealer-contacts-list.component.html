@@ -1,0 +1,61 @@
+<div class="flex justify-content-end mb-2">
+  <app-search (termEvent)="setTerm($event)"></app-search>
+</div>
+
+<p-card>
+  <p-table
+  [value]="paginatedDealerContacts.result" responsiveLayout="scroll" [paginator]="true"
+  [rows]="paginatedDealerContacts.elementsByPage" [totalRecords]="paginatedDealerContacts.totalElements"
+  [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[10, 25, 50, 100]" [loading]="loading"
+  [loading]="loading" [lazy]="true" (onLazyLoad)="loadDealerContacts($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">
+          Email <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th>
+          Notifications
+        </th>
+        <th pSortableColumn="position">
+          Position <p-sortIcon field="position"></p-sortIcon>
+        </th>
+        <th pSortableColumn="phoneNumber">
+          Phone Number <p-sortIcon field="phoneNumber"></p-sortIcon>
+        </th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-dealerContact>
+      <tr>
+        <td>{{ dealerContact.name }}</td>
+        <td>{{ dealerContact.email }}</td>
+        <td>{{ dealerContact.notificationsNames }}</td>
+        <td>{{ dealerContact.positionName }}</td>
+        <td>{{ dealerContact.phoneNumber }}</td>
+        <td>
+          <button
+            pButton icon="pi pi-user-edit"
+            class="mr-2 p-button-warning p-button-rounded"
+            (click)="setDealerContactEdit(dealerContact)"
+          ></button
+          ><button
+            pButton icon="pi pi-times"
+            class="p-button-danger p-button-rounded"
+            (click)="showRemoveDialog(dealerContact)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8"><h2>No records found</h2></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+<p-confirmDialog rejectButtonStyleClass="p-button-text"></p-confirmDialog>

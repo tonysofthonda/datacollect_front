@@ -1,0 +1,76 @@
+<p-card class="header-card">
+  <div class="flex w-full justify-content-between mb-5">
+    <app-title catalog="Models" titlePage="List"></app-title>
+
+    <div class="flex flex-column align-items-end">
+      <button
+        pButton label="New"
+        class="p-button-info mb-3" routerLink="/model/add"
+      ></button>
+
+      <app-search (termEvent)="setTerm($event)"></app-search>
+    </div>
+  </div>
+</p-card>
+
+<p-card>
+  <p-table
+    [value]="paginatedModels.result" responsiveLayout="scroll"
+    [paginator]="true" [rows]="paginatedModels.elementsByPage"
+    [totalRecords]="paginatedModels.totalElements" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50, 100]" [loading]="loading" [loading]="loading" [lazy]="true"
+    (onLazyLoad)="loadModels($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="code">
+          Code <p-sortIcon field="code"></p-sortIcon>
+        </th>
+        <th pSortableColumn="year">
+          Year <p-sortIcon field="year"></p-sortIcon>
+        </th>
+        <th pSortableColumn="name">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="description">
+          Description <p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th pSortableColumn="accountNumber">
+          Account Number <p-sortIcon field="accountNumber"></p-sortIcon>
+        </th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-model>
+      <tr>
+        <td>{{ model.code }}</td>
+        <td>{{ model.year }}</td>
+        <td>{{ model.name }}</td>
+        <td>{{ model.description }}</td>
+        <td>{{ model.account?.accountNumber || "" }}</td>
+        <td>
+          <p-inputSwitch
+            #switchRef [ngModel]="model.status === 'ENABLED'"
+            (onChange)="showChangeStatusDialog(switchRef, $event, model.id)"
+          ></p-inputSwitch>
+        </td>
+        <td>
+          <button
+            pButton icon="pi pi-user-edit"
+            class="p-button-warning p-button-rounded"
+            [routerLink]="['/model/edit/', model.id]"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8"><h2>No records found</h2></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-confirmDialog rejectButtonStyleClass="p-button-text"></p-confirmDialog>

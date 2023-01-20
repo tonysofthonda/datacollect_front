@@ -1,0 +1,154 @@
+:root {
+  --info: #2196f3;
+  --success: #689f38;
+  --warning: #fbc02d;
+  --help: #9c27b0;
+  --danger: #d32f2f;
+}
+
+.screen-loader {
+  position: sticky;
+  top: 0;
+  z-index: 9999999;
+}
+
+.color-info {
+  color: var(--info);
+}
+
+.color-success {
+  color: var(--success);
+}
+
+.color-warning {
+  color: var(--warning);
+}
+
+.color-help {
+  color: var(--help);
+}
+.color-danger {
+  color: var(--danger);
+}
+
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 1px var(--info), inset 0 0 0 1px var(--info),
+    inset 0 0 0 1px var(--info), inset 0 0 0 1px var(--info);
+  border-color: var(--info);
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 1px var(--info), inset 0 0 0 1px var(--info),
+    inset 0 0 0 1px var(--info), inset 0 0 0 1px var(--info);
+  border-color: var(--info);
+}
+
+.header-card {
+  .p-card-body {
+    margin-bottom: 2rem;
+  }
+}
+
+/* SKELETON */
+
+.p-component,
+.p-component *,
+.p-skeleton,
+.skeleton * {
+box-sizing: border-box;
+}
+
+.p-skeleton {
+background-color: #e9ecef;
+border-radius: 3px;
+}
+.p-skeleton:after {
+background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+}
+
+
+/* CONFIRM POPUP */
+.p-confirm-popup {
+  position: absolute;
+  margin-top: 10px;
+  top: 0;
+  left: 0;
+  background: #ffffff;
+  color: #495057;
+  border: 0 none;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+}
+
+.p-confirm-popup:before {
+  border-width: 10px;
+  margin-left: -10px;
+  border: solid transparent;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+}
+
+.p-confirm-popup:after {
+  border-width: 8px;
+  margin-left: -8px;
+  border: solid transparent;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+}
+
+.p-confirm-popup:after, .p-confirm-popup:before {
+  bottom: 100%;
+  left: calc(var(--overlayArrowLeft, 0) + 1.25rem);
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.p-confirm-popup .p-confirm-popup-content {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  z-index: 1001;
+  transform-origin: center top;
+  top: 341px;
+  left: 306px;
+  --overlayArrowLeft: 0px;
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.p-confirm-popup .p-confirm-popup-footer {
+  text-align: right;
+  padding: 0.75rem 1.25rem;
+}
+
+.progress-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.progress-spinner:before {
+content: '';
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0,0,0,0.53);
+}

@@ -1,0 +1,130 @@
+<div class="flex w-full justify-content-between mb-5">
+  <app-title catalog="Dealers" [titlePage]="id ? 'Edit' : 'Add'"></app-title>
+</div>
+
+<p-card>
+  <p-tabView>
+    <p-tabPanel header="General">
+      <form [formGroup]="dealerForm" (ngSubmit)="submit()" class="grid">
+        <div class="col-12 lg:col-6 p-field">
+          <label for="dealerNumber">Dealer Number</label>
+          <input
+            id="dealerNumber" type="number" pInputText
+            formControlName="dealerNumber" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('dealerNumber')">
+            {{ validationService.invalidMessage("dealerNumber") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <label for="name">Name</label>
+          <input
+            id="name" type="text" pInputText
+            formControlName="name" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('name')">
+            {{ validationService.invalidMessage("name") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <label for="businessName">Business Name</label>
+          <input
+            id="businessName" type="text" pInputText
+            formControlName="businessName" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('businessName')">
+            {{ validationService.invalidMessage("businessName") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <label for="rfc">RFC</label>
+          <input
+            id="rfc" type="text" pInputText
+            formControlName="rfc" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('rfc')">
+            {{ validationService.invalidMessage("rfc") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <label for="postCode">Post Code</label>
+          <input
+            id="postCode" type="number" pInputText
+            formControlName="postCode" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('postCode')">
+            {{ validationService.invalidMessage("postCode") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <app-city-input [stateControl]="stateControl" [cityControl]="cityControl" [validationService]="validationService"></app-city-input>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <label for="street">Street</label>
+          <input
+            id="street" type="text" pInputText
+            formControlName="street" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('street')">
+            {{ validationService.invalidMessage("street") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <label for="neighborhood">Neighborhood</label>
+          <input
+            id="neighborhood" type="text" pInputText
+            formControlName="neighborhood" class="w-full"
+          />
+          <small class="p-error" *ngIf="validationService.fieldInvalid('neighborhood')">
+            {{ validationService.invalidMessage("neighborhood") }}</small>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <app-dealer-group-input [dealerGroupControl]="dealerGroupControl" [validationService]="validationService"></app-dealer-group-input>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <app-terchief-input [terchiefControl]="terchiefControl" [validationService]="validationService"></app-terchief-input>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field">
+          <app-workshop-input [workshopControl]="workshopControl" [validationService]="validationService"></app-workshop-input>
+        </div>
+
+        <div class="col-12 lg:col-6 p-field"></div>
+
+        <div class="flex justify-content-between col-12 lg:col-6">
+          <button
+            pButton type="button"
+            label="Cancel" icon="pi pi-times"
+            class="p-button-danger" routerLink="/dealer/list"
+          ></button>
+
+          <div class="flex">
+            <button
+              pButton type="button"  label="Contacts" icon="pi pi-users"
+              class="p-button-info mr-2" (click)="showContacts()" *ngIf="id">
+            </button>
+
+            <button
+              pButton type="submit"
+              label="Save" icon="pi pi-check"
+              class="p-button-success" [disabled]="dealerForm.invalid || dealerForm.pending">
+            </button>
+          </div>
+        </div>
+      </form>
+    </p-tabPanel>
+    <p-tabPanel header="Technical Sheet" *ngIf="id">
+        <app-dealer-facilities></app-dealer-facilities>
+    </p-tabPanel>
+  </p-tabView>
+</p-card>
+<p-dialog
+  header="Contacts" [modal]="true"
+  [maximizable]="true" [style]="{ width: '90vw', height: '90vh' }"
+  [(visible)]="displayContacts"
+>
+  <app-dealer-contact *ngIf="id"></app-dealer-contact>
+</p-dialog>

@@ -1,0 +1,19 @@
+  <div>
+    <label for="terchief">Head Of Territory</label>
+  </div>
+  <p-dropdown
+    class="mr-3" [options]="terchiefs" [style]="{'width':'100%'}"
+    [formControl]="terchiefControl" placeholder="Select"
+    appendTo="body" id="terchief" autoWidth="false"
+    optionLabel="firstName"
+  >
+    <ng-template pTemplate="selectedItem">
+      <div>{{ terchiefControl?.value?.firstName }} {{ terchiefControl?.value?.lastName }} {{ terchiefControl?.value?.motherLastName }}</div>
+    </ng-template>
+    <ng-template let-terchief pTemplate="item">
+      {{ terchief.firstName }} {{ terchief.lastName }} {{ terchief.motherLastName }}
+    </ng-template>
+  </p-dropdown>
+
+  <small class="p-error" *ngIf="validationService.fieldInvalid('terchief')">
+    {{ validationService.invalidMessage("terchief") }}</small>

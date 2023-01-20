@@ -1,0 +1,19 @@
+<div>
+  <label for="position">Position</label>
+</div>
+<p-dropdown
+  class="mr-3" [options]="positions" [style]="{'width':'100%'}"
+  [formControl]="positionControl" placeholder="Select"
+  appendTo="body" id="position" autoWidth="false"
+  optionLabel="name"
+>
+  <ng-template pTemplate="selectedItem">
+    <div>{{ positionControl?.value?.name }}</div>
+  </ng-template>
+  <ng-template let-position pTemplate="item">
+    {{ position.name }}
+  </ng-template>
+</p-dropdown>
+
+<small class="p-error" *ngIf="validationService.fieldInvalid('position')">
+  {{ validationService.invalidMessage("position") }}</small>

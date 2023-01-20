@@ -1,0 +1,50 @@
+<p-card class="w-min">
+  <form [formGroup]="operationCodeForm" (ngSubmit)="submit()" class="grid">
+    <div class="col-12 lg:col-6 p-field">
+      <label for="code">Code</label>
+      <input
+        id="code" type="text"
+        pInputText formControlName="code"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('code')">
+        {{ validationService.invalidMessage("code") }}</small
+      >
+    </div>
+
+    <div class="col-12 lg:col-6 p-field">
+      <label for="description">Description</label>
+      <input
+        id="description" type="text"
+        pInputText formControlName="description"
+        class="w-full"
+      />
+      <small
+        class="p-error"
+        *ngIf="validationService.fieldInvalid('description')"
+      >
+        {{ validationService.invalidMessage("description") }}</small
+      >
+    </div>
+
+    <div class="col-12">
+      <app-service-type-input [formInputControl]="operationCodeForm.get('serviceTypes')" [serviceTypes]="route.snapshot.data['data']['serviceTypes']"></app-service-type-input>
+    </div>
+
+    <div class="flex justify-content-between col-12 lg:col-6">
+      <button
+        pButton type="button"
+        label="Cancel" icon="pi pi-times"
+        class="p-button-danger" routerLink="/operationcodes/operation-code"
+      ></button>
+      <div class="flex">
+        <button
+          pButton type="submit"
+          label="Save" icon="pi pi-check"
+          class="p-button-success" [disabled]="operationCodeForm.invalid"
+          [loading]="submited"
+        ></button>
+      </div>
+    </div>
+  </form>
+</p-card>

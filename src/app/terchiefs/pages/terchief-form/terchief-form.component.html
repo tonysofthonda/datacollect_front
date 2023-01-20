@@ -1,0 +1,82 @@
+<div class="flex w-full justify-content-between mb-5">
+  <app-title
+    catalog="Heads Of Territory" [titlePage]="id ? 'Edit' : 'Add'"
+  ></app-title>
+</div>
+
+<p-card class="w-min">
+  <form [formGroup]="terchiefForm" (ngSubmit)="submit()" class="grid">
+    <div class="col-12 lg:col-6 p-field">
+      <label for="firstName">First Name</label>
+      <input
+        id="firstName" type="text"
+        pInputText formControlName="firstName"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('firstName')"
+      >
+        {{ validationService.invalidMessage("firstName") }}</small>
+    </div>
+
+    <div class="col-12 lg:col-6 p-field">
+      <label for="lastName">Last Name</label>
+      <input
+        id="lastName" type="text"
+        pInputText formControlName="lastName"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('lastName')">
+        {{ validationService.invalidMessage("lastName") }}</small
+      >
+    </div>
+
+    <div class="col-12 lg:col-6 p-field">
+      <label for="motherLastName">Mother Last Name</label>
+      <input
+        id="motherLastName" type="text"
+        pInputText formControlName="motherLastName"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('motherLastName')">
+        {{ validationService.invalidMessage("motherLastName") }}</small>
+    </div>
+
+    <div class="col-12 lg:col-6 p-field">
+      <label for="notes">Notes</label>
+      <input
+        id="notes" type="text" pInputText
+        formControlName="notes" class="w-full"
+      />
+      <small class="p-error" *ngIf="validationService.fieldInvalid('notes')">
+        {{ validationService.invalidMessage("notes") }}</small
+      >
+    </div>
+
+    <div class="flex justify-content-between col-12 lg:col-6">
+      <button
+        pButton type="button" label="Cancel" icon="pi pi-times"
+        class="p-button-danger" routerLink="/terchief/list"
+      ></button>
+      <div class="flex">
+        <button
+          pButton type="button"  label="Contacts" icon="pi pi-users"
+          class="p-button-info mr-2" (click)="showContacts()" *ngIf="id"
+        ></button>
+
+        <button
+          pButton type="submit" label="Save" icon="pi pi-check"
+          class="p-button-success" [disabled]="terchiefForm.invalid"
+          [loading]="submited"
+        ></button>
+      </div>
+    </div>
+  </form>
+</p-card>
+
+<p-dialog
+  header="Contacts" [modal]="true"
+  [maximizable]="true" [style]="{ width: '90vw', height: '90vh' }"
+  [(visible)]="displayContacts"
+>
+<app-terchief-contacts *ngIf="id"></app-terchief-contacts>
+</p-dialog>

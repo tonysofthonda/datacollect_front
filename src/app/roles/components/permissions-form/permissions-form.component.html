@@ -1,0 +1,22 @@
+<form [formGroup]="permissionsForm">
+  <div *ngFor="let view of views" class="p-field w-full mb-3">
+    <span class="p-float-label">
+      <p-multiSelect [inputId]="view.name" [options]="view.viewActions"
+      [formControlName]="view.name" display="chip"
+      class="multiselect-custom" optionLabel="friendlyName">
+        <ng-template let-value pTemplate="selectedItems">
+          <div class="item-value" *ngFor="let action of permissionsForm.get(view.name)?.value">
+              <div>{{action.friendlyName}}</div>
+          </div>
+          <div *ngIf="!permissionsForm.get(view.name)?.value || permissionsForm.get(view.name)?.value?.length === 0">
+            Select Actions
+          </div>
+      </ng-template>
+        <ng-template let-viewAction pTemplate="item">
+            {{viewAction.friendlyName}}
+        </ng-template>
+      </p-multiSelect>
+      <label [for]="view.name">{{view.friendlyName}}</label>
+    </span>
+  </div>
+</form>

@@ -1,0 +1,22 @@
+<div class="mb-3 mt-3">
+  <div class="mb-2">
+    <label *ngIf="!account.children">{{account.name}}</label>
+  </div>
+  <div class="grid p-fluid">
+    <div *ngIf="account.accountNumber" class="col-3">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">N° Cuenta</span>
+            <input tabindex=-1 type="text" readOnly pInputText [value]="account.accountNumber">
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup" class="grid col">
+      <div *ngFor="let accountValue of account.accountValues" class="col-6">
+        <app-input-account [account]="account" [accountValue]="accountValue" [control]="formGroup.get(accountValue.id!.toString())!"
+          [inputGroup]="true" [showError]="validationService.fieldInvalid(accountValue.id!.toString())"
+          [errorMessage]="validationService.invalidMessage(accountValue.id!.toString())"></app-input-account>
+      </div>
+    </form>
+
+  </div>
+</div>

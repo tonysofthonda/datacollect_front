@@ -1,0 +1,44 @@
+
+<div class="custom-overlay">
+  <button pButton type="button"
+    icon="pi pi-save" [pTooltip]="areUnsavedChanges ? 'Hay cambios sin guardar (Ctrl + S)': 'No hay cambios para guardar'" tooltipPosition="top"
+    [ngClass]="{
+    'p-button-raised': true,
+    'p-button-rounded': true,
+    'p-button-warning':areUnsavedChanges,
+    'p-button-success':!areUnsavedChanges
+    }" *ngIf="!financialStateFormService.lockFinancialState"></button>
+
+    <app-formula-terms *ngIf="financialStateFormService.formulaFocus" [forms]="forms" [savedValues]="financialState.accountValues">
+    </app-formula-terms>
+</div>
+
+<div class="mb-5">
+  <app-financial-state-header [financialState]="financialState" [invalidFinancialState]="invalidFinancialState" (save)="handleSave($event, false)" (send)="handleSend($event)" (approve)="handleApprove($event)" (reject)="handleReject($event)" (observations)="handleObservations($event)"></app-financial-state-header>
+</div>
+
+<p-card>
+  <p-tabView [scrollLeft]="true" (onChange)="handleChangeTab($event)">
+    <p-tabPanel *ngFor="let page of pages; let i = index" [header]="'Pagina ' + page" rightIcon="pi pi-money-bill" >
+      <div class="flex justify-content-center" *ngIf="loadingMainAccounts"><p-progressSpinner></p-progressSpinner></div>
+      <app-page *ngIf="!loadingMainAccounts" [pageForm]="forms[i]?.form!" [page]="page" [indexTab]="i" [mainAccounts]="mainAccountsOfPageSelected" (onValuesChange)="onFinancialStateChange($event)"></app-page>
+    </p-tabPanel>
+
+    <p-tabPanel header="Flujo de evaluación" rightIcon="pi pi-check-circle">
+      <app-evaluation-flow></app-evaluation-flow>
+    </p-tabPanel>
+  </p-tabView>
+</p-card>
+
+<p-confirmDialog key="save-in-progress-1" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmPopup key="save-in-progress-2"></p-confirmPopup>
+
+<p-confirmDialog key="evaluation" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+<p-dialog [(visible)]="showRejectForm" [style]="{ width: '80vw' }" [modal]="true">
+  <app-reject-form></app-reject-form>
+</p-dialog>
+
+<p-dialog [(visible)]="showObservationsForm" [style]="{ width: '80vw' }" [modal]="true">
+  <app-observations-form></app-observations-form>
+</p-dialog>
