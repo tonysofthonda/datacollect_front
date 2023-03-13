@@ -29,6 +29,7 @@ import { AccountOtherIncomeComponent } from './components/account-other-income/a
 import { AccountIncomeDeductionComponent } from './components/account-income-deduction/account-income-deduction.component';
 import { FinancialStatePdfButtonComponent } from './components/financial-state-pdf-button/financial-state-pdf-button.component';
 import { FinancialStateXlsxButtonComponent } from './components/financial-state-xlsx-button/financial-state-xlsx-button.component';
+import { FinancialDetailComponent } from './components/financial-details/financial-details.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { FinancialStateXlsxButtonComponent } from './components/financial-state-
     AccountIncomeDeductionComponent,
     FinancialStatePdfButtonComponent,
     FinancialStateXlsxButtonComponent,
+    FinancialDetailComponent
   ],
   imports: [
     CommonModule,

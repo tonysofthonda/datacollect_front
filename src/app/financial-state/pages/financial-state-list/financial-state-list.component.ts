@@ -168,6 +168,8 @@ export class FinancialStateListComponent implements OnInit {
     this.messageService.add({ severity: 'success', summary: 'Archivo procesando...', detail: 'Success' });
     if (event.files && event.files.length > 0) {
       this.file = event.files[0];
+    } else {
+      this.btnExcelDisabled = false; 
     }
 
     if (null != this.file && this.file.size > 0) {

@@ -54,9 +54,17 @@ export class FinancialStateFilterComponent implements OnInit, OnChanges, AfterVi
 
   ngOnInit(): void {
     this.minDate.setFullYear(2022, 0);
+    this.dealerGroupService.getAllDealersGroup().subscribe(data => {
+      this.dealerGroups = data;
+    });
+
+    this.financialStateStatusService.getFinancialStateStatuses().subscribe(data => {
+      this.statuses = data;
+    });
     
-    this.dealerGroups = this.route.snapshot.data["data"]["dealerGroups"];
-    this.statuses = this.route.snapshot.data["data"]["statuses"];
+    
+    //this.dealerGroups = this.route.snapshot.data["data"]["dealerGroups"];
+    //this.statuses = this.route.snapshot.data["data"]["statuses"];
 
     this.filterForm.get("dealerGroupId")?.valueChanges.subscribe(value=>{
       const dealersSelected = this.dealerGroups.find(dealerGroup => dealerGroup.id === value)?.dealers;
