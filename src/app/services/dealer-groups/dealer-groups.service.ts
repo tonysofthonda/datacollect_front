@@ -13,6 +13,13 @@ import { environment } from 'src/environments/environment';
 export class DealerGroupsService {
   constructor(private http: HttpClient) {}
 
+  getAllDealersGroup() {
+    return this.http
+      .get<DealerGroup[]>(
+        `${environment.backendUrl}/dealer-group/`
+      )
+  }
+
   public getDealerGroups(
     page: number = 0,
     elementsByPage: number = 10,

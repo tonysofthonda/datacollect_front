@@ -1,0 +1,759 @@
+<p-panel header="ESTADO FINANCIERO DEL CONSESIONARIO">
+  <h5>BALANCE GENERAL</h5>
+  <p-card>
+    <form [formGroup]="financialStateForm" class="grid">
+      <div class="col-12 lg:col-3 p-field">
+        <label for="dealerNumber">Consesionaria</label>
+        <input
+          id="dealerNumber" type="text" pInputText
+          formControlName="dealerNumber" class="w-full"
+        />
+      </div>
+      <div class="col-12 lg:col-3 p-field">
+        <label for="city">Ciudad</label>
+        <input
+          id="city" type="text" pInputText
+          formControlName="city" class="w-full"
+        />
+      </div>
+      <div class="col-12 lg:col-3 p-field">
+        <label for="state">Estado</label>
+        <input
+          id="state" type="text" pInputText
+          formControlName="state" class="w-full"
+        />
+      </div>
+      <div class="col-12 lg:col-3 p-field">
+        <label for="zip">C.P</label>
+        <input
+          id="zip" type="text" pInputText
+          formControlName="zip" class="w-full"
+        />
+      </div>
+      <div class="col-12 lg:col-6 p-field">
+        <label for="periodFrom">Periodo de cobertura desde</label>
+        <input
+          id="periodFrom" type="text" pInputText
+          formControlName="periodFrom" class="w-full"
+        />
+      </div>
+      <div class="col-12 lg:col-6 p-field">
+        <label for="periodTo">Hasta</label>
+        <input
+          id="periodTo" type="text" pInputText
+          formControlName="periodTo" class="w-full"
+        />
+      </div>
+    </form>
+  </p-card>
+</p-panel>
+<p-tabView>
+  <p-tabPanel header="Pagina 1">
+    <p-accordion (onClose)="onTabClose($event)" (onOpen)="onTabOpen1($event)">
+      <p-accordionTab header="Activos">
+        <p-card>
+          <p-table [loading]="loadingPage1" dataKey="id" editMode="row" [value]="active" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th> NO LINEA </th>
+                <th> ACTIVOS </th>
+                <th> NO. CUENTA </th>
+                <th> IMPORTE </th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-financialActive let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="financialActive">
+                <td>{{ financialActive.noLine }}</td>
+                <td>{{ financialActive.title }}</td>
+                <td>{{ financialActive.noAccount }}</td>
+                <td [pEditableColumn]="financialActive.importe" pEditableColumnField="importe">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="financialActive.importe">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ financialActive.importe }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(financialActive)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Pasivos">
+        <p-card>
+          <p-table [loading]="loadingPage1" dataKey="id" editMode="row" [value]="passive" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>NO LINEA </th>
+                <th>PASIVOS </th>
+                <th>NO. CUENTA</th>
+                <th>IMPORTE </th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-financialPassive let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="financialPassive">
+                <td>{{ financialPassive.noLine }}</td>
+                <td>{{ financialPassive.title }}</td>
+                <td>{{ financialPassive.noAccount }}</td>
+                <td [pEditableColumn]="financialPassive.importe" pEditableColumnField="importe">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="financialPassive.importe">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ financialPassive.importe }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSavePassive(financialPassive)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Otros Activos">
+        <p-card>
+          <p-table [loading]="loadingPage1" [value]="nameAccount"  dataKey="id" editMode="row" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>NO LINEA </th>
+                <th> NOMBRE DE LA CUENTA </th>
+                <th> No. DE LA CUENTA </th>
+                <th> COSTO </th>
+                <th> DEPRECIACION ACUMULADA </th>
+                <th> IMPORTE </th>
+                <th> </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-nameAccount let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="nameAccount">
+                <td>{{ nameAccount.noLine }}</td>
+                <td>{{ nameAccount.nameAccount }}</td>
+                <td>{{ nameAccount.noAccount }}</td>
+                <td [pEditableColumn]="nameAccount.cost" pEditableColumnField="cost">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="nameAccount.cost">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ nameAccount.cost }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="nameAccount.accomulatedDepreciation" pEditableColumnField="accomulatedDepreciation">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="nameAccount.accomulatedDepreciation">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ nameAccount.accomulatedDepreciation }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="nameAccount.importe" pEditableColumnField="importe">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="nameAccount.importe">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ nameAccount.importe }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSaveOtherActive(nameAccount)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Otros Pasivos">
+        <p-card>
+          <p-table [loading]="loadingPage1" [value]="perMonth" dataKey="id" editMode="row" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th> NO LINEA </th>
+                <th> MES </th>
+                <th> UNIDADES HONDA </th>
+                <th> NUEVAS OTRAS </th>
+                <th> UNIDADES USADAS MENUDEO </th>
+                <th> UNIDADES USADAS MAYOREO </th>
+                <th> UTILIDAD O PERDIDA </th>
+                <th> </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-perMonth let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="perMonth">
+                <td>{{ perMonth.noLine }}</td>
+                <td>{{ perMonth.month }}</td>
+                <td [pEditableColumn]="perMonth.unitHonda" pEditableColumnField="unitHonda">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="perMonth.unitHonda">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ perMonth.unitHonda }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="perMonth.newOthers" pEditableColumnField="newOthers">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="perMonth.newOthers">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ perMonth.newOthers }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="perMonth.unitUsedRetail" pEditableColumnField="unitUsedRetail">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="perMonth.unitUsedRetail">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ perMonth.unitUsedRetail }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="perMonth.unitUsedWholesale" pEditableColumnField="unitUsedWholesale">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="perMonth.unitUsedWholesale">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ perMonth.unitUsedWholesale }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="perMonth.profitOrLoss" pEditableColumnField="profitOrLoss">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="perMonth.profitOrLoss">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ perMonth.profitOrLoss }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSaveOtherPassive(perMonth)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Analisis">
+        <p-card>
+          <p-table [loading]="loadingPage1" dataKey="id" editMode="row" [value]="analisys" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th> NO LINEA </th>
+                <th> TIPO </th>
+                <th> NO. CUENTA </th>
+                <th> TOTAL AL CORRIENTE </th>
+                <th> 31-60 </th>
+                <th> 61-90 </th>
+                <th> SOBRE 90 </th>
+                <th> CUENTAS DUDOSAS </th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-analisys let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="analisys">
+                <td>{{ analisys.noLine }}</td>
+                <td>{{ analisys.type }}</td>
+                <td>{{ analisys.noAccount }}</td>
+                <td [pEditableColumn]="analisys.fullyToUpDate" pEditableColumnField="fullyToUpDate">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="analisys.fullyToUpDate">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ analisys.fullyToUpDate }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="analisys.pastDueAccount3160" pEditableColumnField="pastDueAccount3160">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="analisys.pastDueAccount3160">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ analisys.pastDueAccount3160 }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="analisys.pastDueAccount6190" pEditableColumnField="pastDueAccount6190">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="analisys.pastDueAccount6190">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ analisys.pastDueAccount6190 }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="analisys.pastDueAccountsobre90" pEditableColumnField="pastDueAccountsobre90">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="analisys.pastDueAccountsobre90">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ analisys.pastDueAccountsobre90 }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="analisys.questionableAccount" pEditableColumnField="questionableAccount">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="analisys.questionableAccount">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ analisys.questionableAccount }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"  class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSaveAnalisys(analisys)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card> 
+      </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+  <p-tabPanel header="Pagina 2 y 3">
+    <p-accordion (onClose)="onTabClose($event)" (onOpen)="onTabOpen2and3($event)">
+      <p-accordionTab header="Total de ingresos y egresos de la consecionaria">
+        <p-card>
+          <p-table [loading]="loadingPage2and3" dataKey="id" editMode="row" [value]="page2And3Financial" [tableStyle]="{'min-width': '50rem'}" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:8%" >No. linea </th>
+                <th style="width:9%" > Nombre de la cuenta </th>
+                <th style="width:8%" > No. de la cuenta </th>
+                <th style="width:8%" > Mes </th>
+                <th style="width:8%" > Ganancias brutas ventas % </th>
+                <th style="width:8%" > A Depto Honda Nuevos </th>
+                <th style="width:8%" > B Depto Otros Vehículos Nuevos </th>
+                <th style="width:8%"> C Depto Vehículos Usados </th>
+                <th style="width:8%"> D Depto De Servicio </th>
+                <th style="width:8%"> E Depto Taller De Carroceria </th>
+                <th style="width:8%"> F Depto Refacciones y Accesorios </th>
+                <th style="width:8%"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-page2And3Financial let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="page2And3Financial">
+                <td>{{ page2And3Financial.noLine }}</td>
+                <td>{{ page2And3Financial.nameAccount }}</td>
+                <td>{{ page2And3Financial.noAccount }}</td>
+                <td>{{ page2And3Financial.totalIncomeExpensesPerMonth }}</td>
+                <td>{{ page2And3Financial.grossProfit }}</td>
+                <td [pEditableColumn]="page2And3Financial.newHondaMonth" pEditableColumnField="newHondaMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.newHondaMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.newHondaMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page2And3Financial.newOthersMonth" pEditableColumnField="newOthersMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.newOthersMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.newOthersMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page2And3Financial.usedMonth" pEditableColumnField="usedMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.usedMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.usedMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page2And3Financial.deptoService" pEditableColumnField="deptoService">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.deptoService">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.deptoService }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page2And3Financial.deptoWorkshop" pEditableColumnField="deptoWorkshop">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.deptoWorkshop">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.deptoWorkshop }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page2And3Financial.spareParts" pEditableColumnField="spareParts">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.spareParts">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.spareParts }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSavePage3(page2And3Financial)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Posición">
+        <p-card>
+          <p-table [loading]="loadingPage2and3" dataKey="id" editMode="row" [value]="page2And3PositionFinancial" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:25%" > Posición </th>
+                <th style="width:10%" > A </th>
+                <th style="width:10%" > B </th>
+                <th style="width:10%" > C </th>
+                <th style="width:10%" > D </th>
+                <th style="width:10%" > E </th>
+                <th style="width:10%" > F </th>
+                <th style="width:10%"> Total </th>
+                <th style="width:5%"> </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-page2And3Financial let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="page2And3Financial">
+                <td>{{ page2And3Financial.position }}</td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.columnA">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.columnA }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.columnB">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.columnB }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.columnC">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.columnC }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.columnD">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.columnD }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.columnE">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.columnE }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.columnF">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.columnF }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page2And3Financial.total">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page2And3Financial.total }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSavePositionPage3(page2And3Financial)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"  class="p-button-rounded p-button-text p-button-danger"></button>
+                </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Otros Ingresos">
+        <p-card>
+          <p-table [loading]="loadingPage2and3" dataKey="id" editMode="row" [value]="page2And3OtherIncomeFinancial" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:25%"> NOMBRE DE LA CUENTA </th>
+                <th style="width:25%"> No. DE LA CUENTA </th>
+                <th style="width:25%"> MES </th>
+                <th style="width:25%"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-incomeFinancial let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="incomeFinancial">
+                <td>{{ incomeFinancial.nameAccount }}</td>
+                <td>{{ incomeFinancial.noAccount }}</td>
+                <td [pEditableColumn]="incomeFinancial.month" pEditableColumnField="month">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="incomeFinancial.month">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        <td>{{ incomeFinancial.month }}</td>
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSaveincomeFinancialPage3(incomeFinancial)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+      <p-accordionTab header="Deducción de los ingresos">
+        <p-card>
+          <p-table [loading]="loadingPage2and3" dataKey="id" editMode="row" [value]="page2And3IncomeDeductionFinancial" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:25%"> NOMBRE DE LA CUENTA </th>
+                <th style="width:25%"> No. DE LA CUENTA </th>
+                <th style="width:25%"> MES </th>
+                <th style="width:25%"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-deductionFinancial let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="deductionFinancial">
+                <td>{{ deductionFinancial.nameAccount }}</td>
+                <td>{{ deductionFinancial.noAccount }}</td>
+                <td [pEditableColumn]="deductionFinancial.month" pEditableColumnField="month">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="deductionFinancial.month">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        <td>{{ deductionFinancial.month }}</td>
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSavedeductionFinancialPage3(deductionFinancial)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [style]="{'justify-content': 'center'}"><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+  <p-tabPanel header="Pagina 4">
+    <p-accordion (onClose)="onTabClose($event)" (onOpen)="onTabOpen4($event)">
+      <p-accordionTab header="Analisis de utilidad bruta">
+        <p-card>
+          <p-table [loading]="loadingPage4" dataKey="id" editMode="row" [value]="page4Financial" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:15%"> No. linea </th>
+                <th style="width:15%"> Unidades </th>
+                <th style="width:15%"> Ventas </th>
+                <th style="width:15%"> Utilidad bruta </th>
+                <th style="width:15%"> % uni vend. </th>
+                <th style="width:15%"> A.- Departamento de vehiculos nuevos </th>
+                <th style="width:10%"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-page4Financial let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="page4Financial">
+                <td>{{ page4Financial.noLine }}</td>
+                <td [pEditableColumn]="page4Financial.unitCurrentMonth" pEditableColumnField="unitCurrentMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page4Financial.unitCurrentMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page4Financial.unitCurrentMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page4Financial.salesCurrentMonth" pEditableColumnField="salesCurrentMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page4Financial.salesCurrentMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page4Financial.salesCurrentMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page4Financial.grossProfitCurrentMonth" pEditableColumnField="grossProfitCurrentMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page4Financial.grossProfitCurrentMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page4Financial.grossProfitCurrentMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td [pEditableColumn]="page4Financial.soldUnistCurrentMonth" pEditableColumnField="soldUnistCurrentMonth">
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input [style]="{'width': '4rem'}" pInputText type="text" [(ngModel)]="page4Financial.soldUnistCurrentMonth">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{ page4Financial.soldUnistCurrentMonth }}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>{{ page4Financial.deptoCarNewCurrentMonth }}</td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSavePage4(page4Financial)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td><h6>No records found</h6></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+</p-tabView>

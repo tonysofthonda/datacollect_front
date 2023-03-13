@@ -39,7 +39,7 @@
     [paginator]="true" [rows]="paginatedFinancialStates.elementsByPage"
     [totalRecords]="paginatedFinancialStates.totalElements" [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[10, 25, 50, 100]" [loading]="loading" [loading]="loading" [lazy]="true"
+    [rowsPerPageOptions]="[10, 25, 50, 100]"  [loading]="loading" [lazy]="true"
     (onLazyLoad)="loadFinancialStates($event)"
   >
     <ng-template pTemplate="header">
@@ -73,10 +73,10 @@
           <button
             pButton type="button"
             label="Detalles" class="p-button-info mr-2"
-            icon="pi pi-eye" [routerLink]="['/financialstate/form/', financialState.id]">
+            icon="pi pi-eye" [routerLink]="['/financialstate/details/', financialState.id]">
           </button> <br /> <br />
-
-          <p-fileUpload  *ngIf="financialState.flatBtnExcel && financialState.lastStatus.status.name === 'Rechazado'"
+          <!--*ngIf="financialState.flatBtnExcel && financialState.lastStatus.status.name === 'Rechazado'"-->
+          <p-fileUpload
            #fileUpload chooseLabel="Archivo" [customUpload]="true"
           (uploadHandler)="onFileUploadClicked($event, financialState.id)"
           (onSelect)="onSelectFile($event, fileUpload)"
