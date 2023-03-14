@@ -17,9 +17,9 @@ export class ErrorInterceptorService implements HttpInterceptor {
         const severity = err.error?.friendlyError?.status || 'error';
         const detail = err.error?.friendlyError?.message || err.error;
         this.messageService.add({
-          severity,
-          summary: 'An error has ocurred',
-          detail,
+          severity: 'error',
+          summary: 'Invalid information',
+          detail: 'Failed',
           life: 5000,
           closable: true,
         });

@@ -759,10 +759,11 @@ p-inputnumber.ng-dirty.ng-invalid > .p-inputnumber > .p-inputtext {
   background: rgba(0, 0, 0, 0.38);
 }
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-  background: rgba(244, 81, 30, 0.5);
+  
+  background: rgba(69, 30, 244, 0.5);
 }
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-  background: #F4511E;
+  background: #2c1ef4;
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
   background: rgba(244, 81, 30, 0.5);
@@ -1379,7 +1380,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   min-width: 1rem;
   height: 1rem;
   line-height: 1rem;
-  color: #F4511E;
+  color: #2559e9;
   background-color: #ffffff;
 }
 .p-button.p-button-raised {
@@ -4212,7 +4213,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   background: #C8E6C9;
   border: solid transparent;
   border-width: 0 0 0 0;
-  color: #1B5E20;
+  color: #2db92d;
 }
 .p-message.p-message-success .p-message-icon {
   color: #1B5E20;
@@ -4278,7 +4279,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   font-size: 2rem;
 }
 .p-toast .p-toast-message .p-toast-message-content .p-toast-summary {
-  font-weight: 700;
+  font-weight: 500;
 }
 .p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
   margin: 0.5rem 0 0 0;
@@ -4309,14 +4310,15 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   color: #01579B;
 }
 .p-toast .p-toast-message.p-toast-message-success {
-  background: #C8E6C9;
+  background: #00802b;
   border: solid transparent;
-  border-width: 0 0 0 0;
-  color: #1B5E20;
+  border-color: #4dff88;
+  border-width: thick;
+  color: #ffffff;
 }
 .p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
-  color: #1B5E20;
+  color: #ffffff;
 }
 .p-toast .p-toast-message.p-toast-message-warn {
   background: #FFECB3;
@@ -4329,14 +4331,15 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   color: #7f6003;
 }
 .p-toast .p-toast-message.p-toast-message-error {
-  background: #FFCDD2;
+  background: #cc0000;
   border: solid transparent;
-  border-width: 0 0 0 0;
-  color: #B71C1C;
+  border-color: #ff9999;
+  border-width: thick;
+  color: #ffffff;
 }
 .p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
-  color: #B71C1C;
+  color: #ffffff;
 }
 
 .p-galleria .p-galleria-close {
@@ -4492,7 +4495,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 
 .p-badge {
-  background: #F4511E;
+  background: #1e56f4;
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 700;

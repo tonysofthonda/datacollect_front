@@ -37,9 +37,17 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-dealer>
+    <ng-template pTemplate="body" let-dealer let-rowIndex="rowIndex">
       <tr>
-        <td>{{ dealer.dealerNumber }}</td>
+        <div *ngIf="rowIndex < 5; else elseBlock">
+          <p-badge value="New" styleClass="mr-2"></p-badge>
+          <br>
+          <td>{{ dealer.dealerNumber }}</td>
+        </div>
+        <ng-template #elseBlock>
+          <td>{{ dealer.dealerNumber }}</td>
+        </ng-template>
+        
         <td>{{ dealer.dealerGroup }}</td>
         <td>{{ dealer.terchief }} </td>
         <td>

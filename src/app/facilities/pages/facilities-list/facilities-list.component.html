@@ -32,19 +32,21 @@
       <th>Action</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-facility>
+  <ng-template pTemplate="body" let-facility let-rowIndex="rowIndex">
     <tr>
-      <td>{{ facility.concept }}</td>
+      <div *ngIf="rowIndex < 5; else elseBlock">
+        <p-badge value="New" styleClass="mr-2"></p-badge>
+        <br>
+        <td>{{ facility.concept }}</td>
+      </div>
+      <ng-template #elseBlock>
+        <td>{{ facility.concept }}</td>
+      </ng-template>
       <td>{{ facility.description }}</td>
       <td>
-        <button
-          pButton icon="pi pi-user-edit"
-          class="mr-2 p-button-warning p-button-rounded" [routerLink]="['/facility/edit/', facility.id]"
-        ></button
-        ><button
-          pButton icon="pi pi-times"
-          class="p-button-danger p-button-rounded" (click)="showRemoveDialog(facility.id)"
-        ></button>
+        <button pButton icon="pi pi-user-edit" class="mr-2 p-button-warning p-button-rounded"
+          [routerLink]="['/facility/edit/', facility.id]"></button><button pButton icon="pi pi-times"
+          class="p-button-danger p-button-rounded" (click)="showRemoveDialog(facility.id)"></button>
       </td>
     </tr>
   </ng-template>

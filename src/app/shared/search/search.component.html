@@ -1,9 +1,14 @@
 <div class="p-inputgroup">
-  <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+<!--><span class="p-inputgroup-addon"><i class="pi pi-search"></i></span> -->
   <input
     #inputSearch type="text"
     pInputText placeholder="Search..."
     (keydown.enter)="search($event)" (input)="onChange()"
   />
   <span class="p-inputgroup-addon times-icon" *ngIf="searched" (click)="clearSearch()"><i class="pi pi-times"></i></span>
+  <button pButton label="BUSCAR" (click)="clickSearch()" icon="pi pi-search">
+    
+  </button>
+
 </div>
+

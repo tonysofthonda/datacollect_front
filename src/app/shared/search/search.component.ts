@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,21 @@ export class SearchComponent {
     this.termEvent.emit(event.target.value);
   }
 
+  public clickSearch() {
+    if (this.inputSearch.nativeElement?.value) {
+      this.searched = true;
+      let searchText = this.inputSearch.nativeElement?.value.trim();
+      this.termEvent.emit(searchText);
+    }
+  }
+
   public onChange() {
+    if (this.searched && this.inputSearch.nativeElement?.value.trim() === '') {
+      this.clearSearch();
+    }
+  }
+
+  public onClick() {
     if (this.searched && this.inputSearch.nativeElement?.value.trim() === '') {
       this.clearSearch();
     }
@@ -27,4 +42,5 @@ export class SearchComponent {
     this.inputSearch.nativeElement.value = '';
     this.termEvent.emit('');
   }
+  
 }

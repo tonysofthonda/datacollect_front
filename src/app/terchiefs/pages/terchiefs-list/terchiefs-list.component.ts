@@ -53,8 +53,8 @@ export class TerchiefsListComponent implements OnInit {
             );
           this.messageService.add({
             severity: 'success',
-            summary: 'Deleted',
-            detail: 'Head Of Territory Deleted Successfully',
+            summary: 'Head of territory Deleted Successfully',
+            detail: 'Deleted',
           });
         });
       },
@@ -86,6 +86,8 @@ export class TerchiefsListComponent implements OnInit {
 
     const success = (paginatedTerchiefs: Paginated<Terchief> | Terchief[]) => {
       this.paginatedTerchiefs = (paginatedTerchiefs as Paginated<Terchief>);
+      
+      console.log(paginatedTerchiefs as Paginated<Terchief>)
       if (sortField && sortOrder) {
         this.paginatedTerchiefs.result = sortDataTable(
           this.paginatedTerchiefs.result,

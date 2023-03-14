@@ -20,10 +20,10 @@ export class ModelsFormComponent implements OnInit {
 
   modelForm = this.fb.group({
     id:[null],
-    code: [ '', [Validators.required, this.validatorService.isAlphanumeric() ] ],
+    code: [ '', [Validators.required, this.validatorService.isAlphanumeric(), Validators.pattern("!/^\s/") ] ],
     year:[null, [ Validators.required, Validators.min(1000), Validators.max(9999)]],
-    name:[''],
-    description: [''],
+    name:['', [Validators.required, this.validatorService.isAlphabetic2()]],
+    description: ['',this.validatorService.isAlphanumeric(),  Validators.pattern("!/^\s/") ],
     accountNumber:[null,[ this.validatorService.isAlphanumeric() ]],
     systemServices: [[], [Validators.required]],
     status:[1]
@@ -84,8 +84,8 @@ export class ModelsFormComponent implements OnInit {
         .subscribe(() => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Model saved successfully',
+            summary: 'Model saved successfully',
+            detail: 'Success',
           });
           this.location.back();
         });
@@ -95,8 +95,8 @@ export class ModelsFormComponent implements OnInit {
         .subscribe(() => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Model updated successfully',
+            summary: 'Model updated successfully',
+            detail: 'Success',
           });
           this.location.back();
         });

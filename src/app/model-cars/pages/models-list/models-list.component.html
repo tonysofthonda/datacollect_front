@@ -43,15 +43,22 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-model>
+    <ng-template pTemplate="body" let-model let-rowIndex="rowIndex">
       <tr>
-        <td>{{ model.code }}</td>
+        <div *ngIf="rowIndex < 5; else elseBlock">
+          <p-badge value="New" styleClass="mr-2"></p-badge>
+          <br>
+          <td>{{ model.code }}</td>
+        </div>
+        <ng-template #elseBlock>
+          <td>{{ model.code }}</td>
+        </ng-template>
         <td>{{ model.year }}</td>
         <td>{{ model.name }}</td>
         <td>{{ model.description }}</td>
         <td>{{ model.account?.accountNumber || "" }}</td>
         <td>
-          <p-inputSwitch
+          <p-inputSwitch 
             #switchRef [ngModel]="model.status === 'ENABLED'"
             (onChange)="showChangeStatusDialog(switchRef, $event, model.id)"
           ></p-inputSwitch>

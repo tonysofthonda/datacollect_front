@@ -42,6 +42,8 @@ export class ValidationService {
       message = `${fieldName} is required`;
     } else if (errors['notAlphabetic']) {
       message = `${fieldName} requires only alphabetic characters`;
+    } else if (errors['space']) {
+      message = `${fieldName} requires only name`;
     } else if (errors['notAlphanumeric']) {
       message = `${fieldName} requires only alphanumeric characters`;
     } else if (errors['invalidEmail']) {

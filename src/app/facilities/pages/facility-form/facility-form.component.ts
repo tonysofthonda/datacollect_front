@@ -17,7 +17,7 @@ export class FacilityFormComponent implements OnInit {
   id!: number;
   submited: boolean = false;
   facilityForm = this.fb.group({
-    concept: ['',[Validators.required, this.validatorService.isAlphanumeric()]],
+    concept: ['',[Validators.required, this.validatorService.isAlphabetic2() ]],
     description: ['',[Validators.required]],
   });
 
@@ -54,8 +54,8 @@ export class FacilityFormComponent implements OnInit {
           this.submited = false;
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Facility saved successfully',
+            summary: 'Facility saved successfully',
+            detail: 'Success',
           });
           this.location.back();
         });
@@ -70,8 +70,8 @@ export class FacilityFormComponent implements OnInit {
           this.submited = false;
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Facility updated successfully',
+            summary: 'Facility updated successfully',
+            detail: 'Success',
           });
           this.location.back();
         });

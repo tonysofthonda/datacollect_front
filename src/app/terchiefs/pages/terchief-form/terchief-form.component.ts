@@ -18,12 +18,9 @@ export class TerchiefFormComponent implements OnInit {
   displayContacts: boolean = false;
   submited: boolean = false;
   terchiefForm = this.fb.group({
-    firstName: [
-      '',
-      [Validators.required, this.validatorService.isAlphabetic()],
-    ],
-    lastName: ['', [Validators.required, this.validatorService.isAlphabetic()]],
-    motherLastName: ['', this.validatorService.isAlphabetic(false)],
+    firstName: ['',[Validators.required, this.validatorService.isAlphabetic2() ]],
+    lastName:  ['',[Validators.required, this.validatorService.isAlphabetic2()]],
+    motherLastName: ['',[Validators.required, this.validatorService.isAlphabetic2()]],
     notes: ['', this.validatorService.isAlphanumeric(false)],
   });
 
@@ -61,8 +58,8 @@ export class TerchiefFormComponent implements OnInit {
           this.submited = false;
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Head Of Territory saved successfully',
+            summary: 'Head of territory saved successfully',
+            detail: 'Success',
           });
           this.location.back();
         });
@@ -77,8 +74,8 @@ export class TerchiefFormComponent implements OnInit {
           this.submited = false;
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Head Of Territory updated successfully',
+            summary: 'Head of territory updated successfully',
+            detail: 'Success',
           });
           this.location.back();
         });

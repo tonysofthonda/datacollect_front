@@ -19,8 +19,8 @@
         <div class="col-12 lg:col-6 p-field">
           <label for="name">Name</label>
           <input
-            id="name" type="text" pInputText
-            formControlName="name" class="w-full"
+            id="name" type="text" pInputText 
+            formControlName="name" class="w-full" contenteditable="true" spellcheck="true" 
           />
           <small class="p-error" *ngIf="validationService.fieldInvalid('name')">
             {{ validationService.invalidMessage("name") }}</small>
@@ -28,9 +28,9 @@
 
         <div class="col-12 lg:col-6 p-field">
           <label for="businessName">Business Name</label>
-          <input
-            id="businessName" type="text" pInputText
-            formControlName="businessName" class="w-full"
+          <input lang="es"
+            id="businessName" type="text" pInputText  autofocus
+            formControlName="businessName" class="w-full" contenteditable="true" spellcheck="true" 
           />
           <small class="p-error" *ngIf="validationService.fieldInvalid('businessName')">
             {{ validationService.invalidMessage("businessName") }}</small>
@@ -49,7 +49,7 @@
         <div class="col-12 lg:col-6 p-field">
           <label for="postCode">Post Code</label>
           <input
-            id="postCode" type="number" pInputText
+            id="postCode" type="text" pInputText
             formControlName="postCode" class="w-full"
           />
           <small class="p-error" *ngIf="validationService.fieldInvalid('postCode')">
@@ -63,7 +63,7 @@
         <div class="col-12 lg:col-6 p-field">
           <label for="street">Street</label>
           <input
-            id="street" type="text" pInputText
+            id="street" type="text" pInputText contenteditable="true" spellcheck="true" 
             formControlName="street" class="w-full"
           />
           <small class="p-error" *ngIf="validationService.fieldInvalid('street')">
@@ -73,7 +73,7 @@
         <div class="col-12 lg:col-6 p-field">
           <label for="neighborhood">Neighborhood</label>
           <input
-            id="neighborhood" type="text" pInputText
+            id="neighborhood" type="text" pInputText contenteditable="true" spellcheck="true" 
             formControlName="neighborhood" class="w-full"
           />
           <small class="p-error" *ngIf="validationService.fieldInvalid('neighborhood')">

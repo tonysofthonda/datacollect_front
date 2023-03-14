@@ -36,9 +36,16 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-operationCode>
+    <ng-template pTemplate="body" let-operationCode let-rowIndex="rowIndex">
       <tr>
+        <div *ngIf="rowIndex < 5; else elseBlock">
+          <p-badge value="New" styleClass="mr-2"></p-badge>
+          <br>
+          <td>{{ operationCode.code }}</td>
+        </div>
+        <ng-template #elseBlock>
         <td>{{ operationCode.code }}</td>
+      </ng-template>
         <td>{{ operationCode.description }}</td>
         <td>{{ operationCode.serviceTypesNames }}</td>
         <td>

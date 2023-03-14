@@ -32,9 +32,16 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-orderType>
+    <ng-template pTemplate="body" let-orderType let-rowIndex="rowIndex">
       <tr>
-        <td>{{ orderType.code }}</td>
+        <div *ngIf="rowIndex < 5; else elseBlock">
+          <p-badge value="New" styleClass="mr-2"></p-badge>
+          <br>
+          <td>{{ orderType.code }}</td>
+        </div>
+        <ng-template #elseBlock>
+          <td>{{ orderType.code }}</td>
+        </ng-template>  
         <td>{{ orderType.description }}</td>
         <td>
           <button

@@ -43,9 +43,17 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-terchief>
+    <ng-template pTemplate="body" let-terchief let-rowIndex="rowIndex">
       <tr>
-        <td>{{ terchief.firstName }}</td>
+        <div *ngIf="rowIndex < 5; else elseBlock">
+          <p-badge value="New" styleClass="mr-2"></p-badge>
+          <br>
+          <td>{{ terchief.firstName }}</td>
+        </div>
+        <ng-template #elseBlock>
+          <td >{{ terchief.firstName }}</td>
+        </ng-template>
+        
         <td>{{ terchief.lastName }}</td>
         <td>{{ terchief.motherLastName }}</td>
         <td>

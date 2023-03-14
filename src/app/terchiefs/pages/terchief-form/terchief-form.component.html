@@ -10,7 +10,7 @@
       <label for="firstName">First Name</label>
       <input
         id="firstName" type="text"
-        pInputText formControlName="firstName"
+        pInputText formControlName="firstName" 
         class="w-full"
       />
       <small class="p-error" *ngIf="validationService.fieldInvalid('firstName')"
@@ -22,7 +22,7 @@
       <label for="lastName">Last Name</label>
       <input
         id="lastName" type="text"
-        pInputText formControlName="lastName"
+        pInputText formControlName="lastName" 
         class="w-full"
       />
       <small class="p-error" *ngIf="validationService.fieldInvalid('lastName')">
@@ -34,7 +34,7 @@
       <label for="motherLastName">Mother Last Name</label>
       <input
         id="motherLastName" type="text"
-        pInputText formControlName="motherLastName"
+        pInputText formControlName="motherLastName" 
         class="w-full"
       />
       <small class="p-error" *ngIf="validationService.fieldInvalid('motherLastName')">
@@ -45,7 +45,7 @@
       <label for="notes">Notes</label>
       <input
         id="notes" type="text" pInputText
-        formControlName="notes" class="w-full"
+        formControlName="notes" class="w-full" 
       />
       <small class="p-error" *ngIf="validationService.fieldInvalid('notes')">
         {{ validationService.invalidMessage("notes") }}</small

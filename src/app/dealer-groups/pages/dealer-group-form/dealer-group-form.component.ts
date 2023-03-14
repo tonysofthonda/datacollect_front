@@ -17,7 +17,7 @@ export class DealerGroupFormComponent implements OnInit {
   id!: number;
   submited: boolean = false;
   dealerGroupForm = this.fb.group({
-    name: ['', [Validators.required, this.validatorService.isAlphabetic()], this.validatorService.dealerGroupNameUnique()],
+    name: ['', [Validators.required, this.validatorService.isAlphabetic2()], this.validatorService.dealerGroupNameUnique()],
     status: [1],
   });
 
@@ -57,8 +57,8 @@ export class DealerGroupFormComponent implements OnInit {
           this.submited = false;
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Dealer Group saved successfully',
+            summary: 'Dealer Group saved successfully',
+            detail: 'Success',
           });
           this.location.back();
         });
@@ -73,8 +73,8 @@ export class DealerGroupFormComponent implements OnInit {
           this.submited = false;
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Dealer Group updated successfully',
+            summary: 'Dealer Group updated successfully',
+            detail: 'Success',
           });
           this.location.back();
         });

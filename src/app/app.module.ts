@@ -17,6 +17,7 @@ import { TokenInterceptorService } from '@services/interceptors/token-intercepto
 import mxLocale from '@angular/common/locales/es-MX'
 import {registerLocaleData} from '@angular/common/';
 import { SamlComponent } from './saml/saml.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(mxLocale);
 
@@ -30,6 +31,9 @@ registerLocaleData(mxLocale);
     TemplateModule,
     PrimeNgModule,
     SharedModule,
+    ReactiveFormsModule,
+    FormsModule
+   
   ],
   providers: [
     {

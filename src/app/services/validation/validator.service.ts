@@ -11,7 +11,7 @@ import { PositionService } from '@services/position-service/position.service';
 import { RolesService } from '@services/roles/roles.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { OrdersTypesService } from '../orders-types/orders-types.service';
-import {emailPattern, alphaNumericPattern, alphabeticPattern, rfcPattern, accountValuePattern} from "@regex";
+import {emailPattern, alphaNumericPattern, alphabeticPattern, rfcPattern, accountValuePattern, alphabeticPattern2, codigoPostall} from "@regex";
 @Injectable({
   providedIn: 'root',
 })
@@ -45,10 +45,37 @@ export class ValidatorService {
       if (!required && !control.value) {
         return null;
       }
+      console.log(alphabeticPattern.test(control.value))
       const valid = alphabeticPattern.test(control.value);
       return !valid ? { notAlphabetic: { value: control.value } } : null;
     };
   }
+
+  isAlphabetic2(required: boolean = true): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!required && !control.value) {
+        return null;
+      }
+      console.log(alphabeticPattern2.test(control.value))
+      const valid = alphabeticPattern2.test(control.value);
+      return !valid ? { notAlphabetic: { value: control.value } } : null;
+    };
+  }
+
+  
+  codigoPostal(required: boolean = true): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!required && !control.value) {
+        return null;
+      }
+      console.log(codigoPostall.test(control.value))
+      const valid = codigoPostall.test(control.value);
+      return !valid ? { notAlphabetic: { value: control.value } } : null;
+    };
+  }
+
+
+
 
   isAlphanumeric(required: boolean = true): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

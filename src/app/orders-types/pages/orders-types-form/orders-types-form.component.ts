@@ -21,7 +21,7 @@ export class OrdersTypesFormComponent implements OnInit {
     code: ['', [ Validators.required, Validators.maxLength(5), this.validatorService.isAlphanumeric() ],
       [this.validatorService.orderTypeCodeUnique()],
     ],
-    description: [''],
+    description: ['', Validators.pattern("!/^\s/")] ,
     servicesTypes: [[], [Validators.required]],
   });
 
@@ -60,8 +60,8 @@ export class OrdersTypesFormComponent implements OnInit {
         .subscribe(() => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Order Type saved successfully',
+            summary: 'Order Type saved successfully',
+            detail: 'Success',
           });
           this.location.back();
         });
@@ -75,8 +75,8 @@ export class OrdersTypesFormComponent implements OnInit {
         .subscribe(() => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Order Type updated successfully',
+            summary: 'Order Type updated successfully',
+            detail: 'Success',
           });
           this.location.back();
         });

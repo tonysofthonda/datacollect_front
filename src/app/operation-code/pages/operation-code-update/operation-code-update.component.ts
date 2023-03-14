@@ -27,7 +27,7 @@ export class OperationCodeUpdateComponent implements OnInit {
 
   operationCodeForm = this.fb.group({
     id: [],
-    code: ['', [Validators.required, Validators.maxLength(10)],
+    code: ['', [Validators.required, Validators.maxLength(10),  ],
     ],
     description: ['', [Validators.required, Validators.maxLength(255)]],
     serviceTypes: [[], [Validators.required]]

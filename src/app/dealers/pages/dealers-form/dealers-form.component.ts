@@ -18,6 +18,7 @@ import { MessageService } from 'primeng/api';
 export class DealersFormComponent implements OnInit {
   id!: number;
   displayContacts: boolean = false;
+  
 
   stateControl = this.fb.control(null, Validators.required);
   cityControl = this.fb.control(null, Validators.required);
@@ -27,15 +28,15 @@ export class DealersFormComponent implements OnInit {
 
   dealerForm = this.fb.group({
     id:[null],
-    dealerNumber: [ '', [ Validators.required, Validators.min(10000), Validators.max(999999)], [this.validatorService.dealerNumberUnique()] ],
-    name:['', [ Validators.required, this.validatorService.isAlphanumeric()],[this.validatorService.dealerNameUnique()]],
-    businessName:[''],
+    dealerNumber: [ '', [ Validators.required, Validators.min(10000), Validators.max(999999)]],//, [this.validatorService.dealerNumberUnique()] ],
+    name:['', [ Validators.required, Validators.pattern(/^[a-zA-Z\u00C0-\u017F]+$/)]],
+    businessName:['', Validators.required, Validators.pattern("!/^\s/")],
     rfc: ['', this.validatorService.isRfc(false)],
-    postCode:[null,[Validators.min(10000), Validators.max(99999)]],
+    postCode:[null,[Validators.pattern(/^(?:0?[1-9]|[1-4]\d|5[0-2])\d{3}$/)]],
     state: this.stateControl,
     city: this.cityControl,
-    street: [''],
-    neighborhood: [''],
+    street: ['', [Validators.pattern(/^(?=.*\d)(?=.*[a-záéíóúüñ]).*[A-ZÁÉÍÓÚÜÑ]/) ]],
+    neighborhood: ['', [Validators.pattern(/^(?=.*\d)(?=.*[a-záéíóúüñ]).*[A-ZÁÉÍÓÚÜÑ]/) ]],
     dealerGroup: this.dealerGroupControl,
     terchief: this.terchiefControl,
     workshop: this.workshopControl,
@@ -83,8 +84,8 @@ export class DealersFormComponent implements OnInit {
         .subscribe(() => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Dealer saved successfully',
+            summary: 'Dealer saved successfully',
+            detail: 'Success',
           });
           this.location.back();
         });
